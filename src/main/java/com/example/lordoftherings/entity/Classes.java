@@ -11,7 +11,7 @@ public class Classes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_classe;
     private String nom_classe;
-    private int force;
+    private int puissance;
     private int agileté;
     private int constitution;
     private int intelligence;
@@ -20,10 +20,10 @@ public class Classes {
 
     }
 
-    public Classes(Integer id_classe, String nom_classe, int force, int agileté, int constitution, int intelligence) {
+    public Classes(Integer id_classe, String nom_classe, int puissance, int agileté, int constitution, int intelligence) {
         this.id_classe = id_classe;
         this.nom_classe = nom_classe;
-        this.force = force;
+        this.puissance = puissance;
         this.agileté = agileté;
         this.constitution = constitution;
         this.intelligence = intelligence;
@@ -46,11 +46,11 @@ public class Classes {
     }
 
     public int getForce() {
-        return force;
+        return puissance;
     }
 
     public void setForce(int force) {
-        this.force = force;
+        this.puissance = force;
     }
 
     public int getAgileté() {
@@ -82,7 +82,7 @@ public class Classes {
         return "Classes{" +
                 "id_classe=" + id_classe +
                 ", nom_classe='" + nom_classe + '\'' +
-                ", force=" + force +
+                ", puissance=" + puissance +
                 ", agileté=" + agileté +
                 ", constitution=" + constitution +
                 ", intelligence=" + intelligence +
