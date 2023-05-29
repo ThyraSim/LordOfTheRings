@@ -45,12 +45,12 @@ public class Classes {
         this.nom_classe = nom_classe;
     }
 
-    public int getForce() {
+    public int getPuissance() {
         return puissance;
     }
 
-    public void setForce(int force) {
-        this.puissance = force;
+    public void setPuissance(int Puissance) {
+        this.puissance = Puissance;
     }
 
     public int getAgileté() {
