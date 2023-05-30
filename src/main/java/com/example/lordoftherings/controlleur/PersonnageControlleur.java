@@ -1,5 +1,6 @@
 package com.example.lordoftherings.controlleur;
 
+import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.entity.Personnage;
@@ -24,7 +25,14 @@ public class PersonnageControlleur {
         return personnageService.findAll();
     }
 
-    @DeleteMapping("/personnages/{personnageId}")
+    @GetMapping("/personnages/{personnageId}")
+    public String showCompte(@PathVariable Integer personnageId){
+
+        Personnage tempPersonnage = personnageService.findById(personnageId);
+        return  tempPersonnage.toString();
+    }
+
+    @DeleteMapping("/personnages/delete/{personnageId}")
     public String deletePersonnage(@PathVariable Integer personnageId){
 
         Personnage temppersonnage = personnageService.findById(personnageId);

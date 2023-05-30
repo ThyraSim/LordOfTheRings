@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CompteUser</title>
+</head>
+<body>
+    <table border="1">
+      <thead>
+      <tr>
+        <th>Nom d'utilisateur</th>
+        <th>Mot de passe</th>
+        <th>Premium</th>
+        <th>Nombre de personnages</th>
+      </tr>
+      </thead>
+      <tbody>
+        <td th:text="${compte.id_compte}"></td>
+        <td th:text="${compte.nom_utilisateur}"></td>
+        <td th:text="${compte.premium}"></td>
+        <td th:text="${compte.nombre_personnages}"></td>
+        <td>
+          <form action="/comptesChange" method="post">
+            <input type="hidden" name="compteId" th:value="${compte.id_compte}">
+            <button type="submit">Edit</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+</body>
+</html>

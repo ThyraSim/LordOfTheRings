@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comptes</title>
+</head>
+<body>
+    <h2>List of Comptes</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom d'utilisateur</th>
+            <th>Mot de passe</th>
+            <th>Premium</th>
+            <th>Nombre de personnages</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="compte : ${comptes}">
+            <td th:text="${compte.id_compte}"></td>
+            <td th:text="${compte.nom_utilisateur}"></td>
+            <td th:text="${compte.motDePasse}"></td>
+            <td th:text="${compte.premium}"></td>
+            <td th:text="${compte.nombre_personnages}"></td>
+            <td>
+                <form action="/comptesChoice" method="post">
+                    <input type="hidden" name="compteId" th:value="${compte.id_compte}">
+                    <button type="submit">Edit</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

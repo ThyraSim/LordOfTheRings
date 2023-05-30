@@ -1,5 +1,7 @@
 package com.example.lordoftherings.controlleur;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.service.CompteService;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class CompteControlleur {
     private CompteService compteService;
 
@@ -18,16 +20,24 @@ public class CompteControlleur {
         this.compteService = compteService;
     }
 
+    @PostMapping("/comptesChoice")
+    public String choixCompte(@RequestParam("compteId") String compteId){
+        return "redirect:/comptes/" + compteId;
+    }
+
     @GetMapping("/comptes")
-    public List<Compte> findAll(){
-        return compteService.findAll();
+    public String findAll(Model model){
+        List<Compte> comptes = compteService.findAll();
+        model.addAttribute("comptes", comptes);
+        return "affichageCompte";
     }
 
     @GetMapping("/comptes/{compteId}")
-    public String showCompte(@PathVariable Integer compteId){
+    public String showCompte(Model model, @PathVariable Integer compteId){
 
         Compte tempCompte = compteService.findById(compteId);
-        return  tempCompte.toString();
+        model.addAttribute("compte", tempCompte);
+        return "compteUser";
     }
 
     @DeleteMapping("/comptes/delete/{compteId}")
@@ -45,7 +55,11 @@ public class CompteControlleur {
     }
 
     @PutMapping("/comptes/edit/{compteId}")
-    public ResponseEntity<String> modifyClasse(@PathVariable Integer compteId, @RequestBody Compte newCompte){
+    public ResponseEntity<String> modifyClasse(@PathVariable Integer compteId,
+                                               @RequestParam("nom_utilisateur") String nomUtilisateur,
+                                               @RequestParam("motDePasse") String motDePasse,
+                                               @RequestParam("premium") boolean premium,
+                                               @RequestParam("nombre_personnages") int nombrePersonnages){
         Compte oldCompte = compteService.findById(compteId);
 
         if (oldCompte == null) {
@@ -53,15 +67,22 @@ public class CompteControlleur {
         }
 
         // Update the properties of the existing item with the new values
-        oldCompte.setDate_creation(newCompte.getDate_creation());
-        oldCompte.setPremium(newCompte.isPremium());
-        oldCompte.setNom_utilisateur(newCompte.getNom_utilisateur());
-        oldCompte.setNombre_personnages(newCompte.getNombre_personnages());
+        oldCompte.setPremium(premium);
+        oldCompte.setNom_utilisateur(nomUtilisateur);
+        oldCompte.setNombre_personnages(nombrePersonnages);
+        oldCompte.setMotDePasse(motDePasse);
         // ... update other properties as needed
 
         // Save the modified item
         compteService.save(oldCompte);
 
         return ResponseEntity.ok("Item modified successfully");
+    }
+
+    @PostMapping("/comptesChange")
+    public String sendChangeForm(@RequestParam("compteId") Integer compteId, Model model){
+        Compte tempCompte = compteService.findById(compteId);
+        model.addAttribute("compte", tempCompte);
+        return "compteForm";
     }
 }
