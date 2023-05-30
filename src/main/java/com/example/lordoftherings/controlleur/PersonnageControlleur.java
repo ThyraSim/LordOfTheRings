@@ -1,9 +1,11 @@
 package com.example.lordoftherings.controlleur;
 
+import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.service.PersonnageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,5 +36,28 @@ public class PersonnageControlleur {
     public Personnage addpersonnage(@RequestBody Personnage personnage){
 
         return this.personnageService.save(personnage);
+    }
+
+    @PutMapping("/personnages/edit/{personnageId}")
+    public ResponseEntity<String> modifyClasse(@PathVariable Integer personnageId, @RequestBody Personnage newPersonnage){
+        Personnage oldPersonnage = personnageService.findById(personnageId);
+
+        if (oldPersonnage == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Update the properties of the existing item with the new values
+        oldPersonnage.setNom_personnage(newPersonnage.getNom_personnage());
+        oldPersonnage.setId_classe(newPersonnage.getId_classe());
+        oldPersonnage.setDate_creation(newPersonnage.getDate_creation());
+        oldPersonnage.setNiveau(newPersonnage.getNiveau());
+        oldPersonnage.setId_arme(newPersonnage.getId_arme());
+        oldPersonnage.setId_compte(newPersonnage.getId_compte());
+        // ... update other properties as needed
+
+        // Save the modified item
+        personnageService.save(oldPersonnage);
+
+        return ResponseEntity.ok("Item modified successfully");
     }
 }
