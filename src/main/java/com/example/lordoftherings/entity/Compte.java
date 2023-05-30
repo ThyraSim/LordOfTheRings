@@ -13,16 +13,15 @@ public class Compte {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_compte;
     private String nom_utilisateur;
+    private String motDePasse;
     private String date_creation;
     private boolean premium;
     private Integer nombre_personnages;
 
-    private String motDePasse;
-
     public Compte() {
     }
 
-    public Compte(Integer id_compte, String nom_utilisateur, String date_creation, boolean premium, Integer nombre_personnages, String motDePasse) {
+    public Compte(Integer id_compte, String nom_utilisateur, String motDePasse, String date_creation, boolean premium, Integer nombre_personnages ) {
         this.id_compte = id_compte;
         this.nom_utilisateur = nom_utilisateur;
         this.date_creation = date_creation;

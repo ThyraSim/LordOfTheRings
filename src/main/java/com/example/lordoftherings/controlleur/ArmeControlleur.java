@@ -1,6 +1,7 @@
 package com.example.lordoftherings.controlleur;
 
 import com.example.lordoftherings.entity.Arme;
+import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.service.ArmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,14 @@ public class ArmeControlleur {
         return armeService.findAll();
     }
 
-    @DeleteMapping("/armes/{armeId}")
+    @GetMapping("/armes/{armeId}")
+    public String showCompte(@PathVariable Integer armeId){
+
+        Arme tempArme = armeService.findById(armeId);
+        return  tempArme.toString();
+    }
+
+    @DeleteMapping("/armes/delete/{armeId}")
     public String deleteArme(@PathVariable Integer armeId){
         Arme tempArme = armeService.findById(armeId);
         armeService.delete(armeId);

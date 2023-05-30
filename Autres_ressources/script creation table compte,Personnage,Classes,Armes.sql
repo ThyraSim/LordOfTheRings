@@ -7,18 +7,19 @@
  CREATE TABLE Compte (
                          id_compte int NOT NULL AUTO_INCREMENT,
                          nom_utilisateur varchar(60),
+                         mot_de_passe varchar(60),
 						 date_creation date,
                          premium boolean,
                          nombre_personnages int,
                          
                          CONSTRAINT id_compte_pk PRIMARY KEY (id_compte)
 );
-INSERT INTO Compte (nom_utilisateur,date_creation,premium,nombre_personnages) VALUES
-                              ('Chat','2023-05-23',false,1),
-                              ('Orignal','2023-05-19',true,2),
-                              ('Marmotte','1991-09-20',true,10),
-                              ('Tyzral','2001-05-03',true,99),
-                              ('Knik','1991-09-20',true,99)
+INSERT INTO Compte (nom_utilisateur,mot_de_passe,date_creation,premium,nombre_personnages) VALUES
+                              ('Chat','Poisson','2023-05-23',false,1),
+                              ('Orignal','Cheese','2023-05-19',true,2),
+                              ('Marmotte','Castor','1991-09-20',true,10),
+                              ('Tyzral','Dino','2001-05-03',true,99),
+                              ('Knik','Knok','1991-09-20',true,99)
                               ;
 
  CREATE TABLE Classes (

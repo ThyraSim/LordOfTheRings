@@ -23,12 +23,14 @@ public class CompteControlleur {
         return compteService.findAll();
     }
 
-    @GetMapping("/")
-    public String sayHello(){
-        return "Hello World";
+    @GetMapping("/comptes/{compteId}")
+    public String showCompte(@PathVariable Integer compteId){
+
+        Compte tempCompte = compteService.findById(compteId);
+        return  tempCompte.toString();
     }
 
-    @DeleteMapping("/comptes/{compteId}")
+    @DeleteMapping("/comptes/delete/{compteId}")
     public String deleteCompte(@PathVariable Integer compteId){
 
         Compte tempCompte = compteService.findById(compteId);
