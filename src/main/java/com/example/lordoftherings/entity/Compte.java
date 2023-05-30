@@ -17,15 +17,18 @@ public class Compte {
     private boolean premium;
     private Integer nombre_personnages;
 
+    private String motDePasse;
+
     public Compte() {
     }
 
-    public Compte(Integer id_compte, String nom_utilisateur, String date_creation, boolean premium, Integer nombre_personnages) {
+    public Compte(Integer id_compte, String nom_utilisateur, String date_creation, boolean premium, Integer nombre_personnages, String motDePasse) {
         this.id_compte = id_compte;
         this.nom_utilisateur = nom_utilisateur;
         this.date_creation = date_creation;
         this.premium = premium;
         this.nombre_personnages = nombre_personnages;
+        this.motDePasse = motDePasse;
     }
 
     public Integer getId_compte() {
@@ -68,6 +71,14 @@ public class Compte {
         this.nombre_personnages = nombre_personnages;
     }
 
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
+    }
+
     @Override
     public String toString() {
         return "Compte{" +
@@ -76,6 +87,7 @@ public class Compte {
                 ", date_creation='" + date_creation + '\'' +
                 ", premium=" + premium +
                 ", nombre_personnages=" + nombre_personnages +
+                ", motDePasse='" + motDePasse + '\'' +
                 '}';
     }
 }
