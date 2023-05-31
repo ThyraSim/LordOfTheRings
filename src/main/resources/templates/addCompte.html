@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/comptes/add" method="post">
+  <table border="1">
+    <thead>
+    <tr>
+      <th>Nom d'utilisateur</th>
+      <th>Mot de passe</th>
+      <th>Premium</th>
+      <th>Nombre de personnages</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><input type="text" name="nom_utilisateur" required></td>
+      <td><input type="password" name="motDePasse" required></td>
+      <td><input type="checkbox" name="premium" value="true"></td>
+      <td><input type="number" name="nombre_personnages" required></td>
+      <td>
+        <input type="hidden" name="compteId">
+        <button type="submit">Ajouter</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+</body>
+</html>

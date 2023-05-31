@@ -5,11 +5,10 @@
     <title>Compte</title>
 </head>
 <body>
-<form action="/edit" method="post">
+<form action="/comptes/edit" method="post">
   <table border="1">
     <thead>
     <tr>
-      <th>ID</th>
       <th>Nom d'utilisateur</th>
       <th>Mot de passe</th>
       <th>Premium</th>
@@ -18,16 +17,13 @@
     </thead>
     <tbody>
     <tr>
-      <td><input type="text" th:value="${compte.id_compte}" readonly></td>
       <td><input type="text" name="nom_utilisateur" th:value="${compte.nom_utilisateur}"></td>
       <td><input type="password" name="motDePasse" th:value="${compte.motDePasse}"></td>
       <td><input type="checkbox" name="premium" th:checked="${compte.premium}"></td>
       <td><input type="number" name="nombre_personnages" th:value="${compte.nombre_personnages}"></td>
       <td>
-        <form action="/edit" method="post">
-          <input type="hidden" name="compteId" th:value="${compte.id_compte}">
+          <input type="hidden" name="compteId" th:value="*{compte.id_compte}">
           <button type="submit">Sauvegarder</button>
-        </form>
       </td>
     </tr>
     </tbody>

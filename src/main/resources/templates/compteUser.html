@@ -15,8 +15,8 @@
       </tr>
       </thead>
       <tbody>
-        <td th:text="${compte.id_compte}"></td>
         <td th:text="${compte.nom_utilisateur}"></td>
+        <td th:text="${compte.motDePasse}"></td>
         <td th:text="${compte.premium}"></td>
         <td th:text="${compte.nombre_personnages}"></td>
         <td>
@@ -28,5 +28,12 @@
       </tr>
       </tbody>
     </table>
+    <form action="/comptes/delete/" method="post">
+      <input type="hidden" name="compteId" th:value="${compte.id_compte}">
+      <button type="submit">Supprimer le compte</button>
+    </form>
+    <form action="/logout" method="post">
+        <button type="submit">Deconnexion</button>
+    </form>
 </body>
 </html>

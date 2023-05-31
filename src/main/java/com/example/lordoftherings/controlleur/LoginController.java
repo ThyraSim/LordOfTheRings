@@ -101,4 +101,24 @@ public class LoginController {
         }
         return "error";
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(){
+        ResponseCookie deletedCookie = ResponseCookie.from("sessionId", "")
+                .maxAge(0)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .build();
+
+        // Set the deleted cookie in the response headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, deletedCookie.toString());
+
+        // Return the response with the deleted cookie
+        return ResponseEntity.status(HttpStatus.SEE_OTHER)
+                .header(HttpHeaders.LOCATION, "/")
+                .headers(headers)
+                .build();
+    }
 }

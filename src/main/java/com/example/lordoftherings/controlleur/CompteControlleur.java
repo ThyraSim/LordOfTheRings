@@ -1,14 +1,18 @@
 package com.example.lordoftherings.controlleur;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.service.CompteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -32,6 +36,13 @@ public class CompteControlleur {
         return "affichageCompte";
     }
 
+    @GetMapping("/comptes/redirectDelete")
+    public String redirectDelete(Model model){
+        model.addAttribute("type", "deleted");
+        model.addAttribute("item", "Compte");
+        return "success";
+    }
+
     @GetMapping("/comptes/{compteId}")
     public String showCompte(Model model, @PathVariable Integer compteId){
 
@@ -40,30 +51,82 @@ public class CompteControlleur {
         return "compteUser";
     }
 
-    @DeleteMapping("/comptes/delete/{compteId}")
-    public String deleteCompte(@PathVariable Integer compteId){
+    @PostMapping("/comptes/delete/")
+    public ResponseEntity<String> deleteCompte(@RequestParam("compteId") Integer compteId,
+                                               @CookieValue(name = "sessionId", required = false) Integer sessionId){
+
+        if(sessionId == compteId){
+            ResponseCookie deletedCookie = ResponseCookie.from("sessionId", "")
+                    .maxAge(0)
+                    .httpOnly(true)
+                    .secure(true)
+                    .path("/")
+                    .build();
+
+            // Set the deleted cookie in the response headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.SET_COOKIE, deletedCookie.toString());
+
+            // Return the response with the deleted cookie
+            return ResponseEntity.status(HttpStatus.OK)
+                    .header(HttpHeaders.LOCATION, "/comptes/redirectDelete")
+                    .headers(headers)
+                    .build();
+        }
 
         Compte tempCompte = compteService.findById(compteId);
         compteService.delete(compteId);
-        return  "Compte supprimé : " + compteId;
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header(HttpHeaders.LOCATION, "/comptes/redirectDelete")
+                .build();
     }
 
-    @PostMapping("/comptes")
-    public Compte addCompte(@RequestBody Compte compte){
+    @PostMapping("/comptes/add")
+    public ResponseEntity<String> addCompte(@RequestParam("nom_utilisateur") String nomUtilisateur,
+                                            @RequestParam("motDePasse") String motDePasse,
+                                            @RequestParam(value = "premium", required = false) Boolean premium,
+                                            @RequestParam("nombre_personnages") int nombrePersonnages){
+        if(premium == null){
+            premium = false;
+        }
+        Compte newCompte = new Compte();
+        newCompte.setMotDePasse(motDePasse);
+        newCompte.setPremium(premium);
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+        newCompte.setDate_creation(formattedDate);
+        newCompte.setNom_utilisateur(nomUtilisateur);
+        newCompte.setNombre_personnages(nombrePersonnages);
 
-        return this.compteService.save(compte);
+        compteService.save(newCompte);
+
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header(HttpHeaders.LOCATION, "/comptes/redirectAdd")
+                .build();
     }
 
-    @PutMapping("/comptes/edit/{compteId}")
-    public ResponseEntity<String> modifyClasse(@PathVariable Integer compteId,
+    @GetMapping("/comptes/redirectAdd")
+    public String redirectAdd(Model model){
+        model.addAttribute("type", "added");
+        model.addAttribute("item", "Compte");
+        return "success";
+    }
+
+    @PostMapping("/comptes/edit")
+    public ResponseEntity<String> modifyClasse(@RequestParam("compteId") Integer compteId,
                                                @RequestParam("nom_utilisateur") String nomUtilisateur,
                                                @RequestParam("motDePasse") String motDePasse,
-                                               @RequestParam("premium") boolean premium,
+                                               @RequestParam(value = "premium", required = false) Boolean premium,
                                                @RequestParam("nombre_personnages") int nombrePersonnages){
         Compte oldCompte = compteService.findById(compteId);
 
         if (oldCompte == null) {
             return ResponseEntity.notFound().build();
+        }
+
+        if(premium == null){
+            premium = false;
         }
 
         // Update the properties of the existing item with the new values
@@ -76,7 +139,17 @@ public class CompteControlleur {
         // Save the modified item
         compteService.save(oldCompte);
 
-        return ResponseEntity.ok("Item modified successfully");
+
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header(HttpHeaders.LOCATION, "/comptes/redirectEdit")
+                .build();
+    }
+
+    @GetMapping("/comptes/redirectEdit")
+    public String redirectEdit(Model model){
+        model.addAttribute("type", "edited");
+        model.addAttribute("item", "Compte");
+        return "success";
     }
 
     @PostMapping("/comptesChange")
@@ -84,5 +157,10 @@ public class CompteControlleur {
         Compte tempCompte = compteService.findById(compteId);
         model.addAttribute("compte", tempCompte);
         return "compteForm";
+    }
+
+    @PostMapping("/comptes/addForm")
+    public String redirectFormAddCompte(){
+        return "addCompte";
     }
 }
