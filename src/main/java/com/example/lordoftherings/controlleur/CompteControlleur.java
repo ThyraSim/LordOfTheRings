@@ -30,7 +30,14 @@ public class CompteControlleur {
     }
 
     @GetMapping("/comptes")
-    public String findAll(Model model){
+    public String findAll(Model model,
+                          @CookieValue(name = "sessionId", required = false) Integer sessionId){
+        if(sessionId != null && sessionId != 0){
+            return "redirect:/comptes/"+sessionId;
+        } else if(sessionId == null){
+            return "login";
+        }
+
         List<Compte> comptes = compteService.findAll();
         model.addAttribute("comptes", comptes);
         return "affichageCompte";
@@ -44,14 +51,21 @@ public class CompteControlleur {
     }
 
     @GetMapping("/comptes/{compteId}")
-    public String showCompte(Model model, @PathVariable Integer compteId){
+    public String showCompte(Model model,
+                             @PathVariable Integer compteId,
+                             @CookieValue(name = "sessionId", required = false) Integer sessionId){
+        if(sessionId != null && sessionId != 0 && sessionId != compteId){
+            return "redirect:/comptes/"+sessionId;
+        } else if(sessionId == null){
+            return "login";
+        }
 
         Compte tempCompte = compteService.findById(compteId);
         model.addAttribute("compte", tempCompte);
         return "compteUser";
     }
 
-    @PostMapping("/comptes/delete/")
+    @PostMapping("/comptes/delete")
     public ResponseEntity<String> deleteCompte(@RequestParam("compteId") Integer compteId,
                                                @CookieValue(name = "sessionId", required = false) Integer sessionId){
 

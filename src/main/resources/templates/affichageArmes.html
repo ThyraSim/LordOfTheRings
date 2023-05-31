@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nom de l'arme</th>
+    <th>Dommage</th>
+    <th>Portée</th>
+    <th>Précision</th>
+    <th>Type de stat</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="arme : ${armes}">
+    <td th:text="${arme.id_arme}"></td>
+    <td th:text="${arme.nom_arme}"></td>
+    <td th:text="${arme.dommage}"></td>
+    <td th:text="${arme.portee}"></td>
+    <td th:text="${arme.precission}"></td>
+    <td th:text="${arme.type_stat}"></td>
+    <td>
+      <form action="/armesChoice" method="post">
+        <input type="hidden" name="armeId" th:value="${arme.id_arme}">
+        <button type="submit">Edit</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<form action="/armes/addForm" method="post">
+  <button type="submit">Ajouter une arme</button>
+</form>
+<form action="/" method="post">
+  <button type="submit">Retour au menu principal</button>
+</form>
+</body>
+</html>

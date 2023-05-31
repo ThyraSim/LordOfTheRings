@@ -20,7 +20,7 @@ public class PersonnageControlleur {
         this.personnageService = personnageService;
     }
 
-    @GetMapping("/personnages")
+    @PostMapping("/personnages")
     public List<Personnage> findAll(){
         return personnageService.findAll();
     }
@@ -40,11 +40,11 @@ public class PersonnageControlleur {
         return  "personnage supprimé : " + personnageId;
     }
 
-    @PostMapping("/personnages")
-    public Personnage addpersonnage(@RequestBody Personnage personnage){
-
-        return this.personnageService.save(personnage);
-    }
+//    @PostMapping("/personnages")
+//    public Personnage addpersonnage(@RequestBody Personnage personnage){
+//
+//        return this.personnageService.save(personnage);
+//    }
 
     @PutMapping("/personnages/edit/{personnageId}")
     public ResponseEntity<String> modifyClasse(@PathVariable Integer personnageId, @RequestBody Personnage newPersonnage){

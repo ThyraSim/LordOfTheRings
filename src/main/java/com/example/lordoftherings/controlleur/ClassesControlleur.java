@@ -18,7 +18,7 @@ public class ClassesControlleur {
         this.classesService = classesService;
     }
 
-    @GetMapping("/classes")
+    @PostMapping("/classes")
     public List<Classes> findAll(){
         return classesService.findAll();
     }
@@ -37,10 +37,10 @@ public class ClassesControlleur {
         return "Classe supprimée : " + classeId;
     }
 
-    @PostMapping("/classes")
-    public Classes addClasse(@RequestBody Classes classes){
-        return this.classesService.save(classes);
-    }
+//    @PostMapping("/classes")
+//    public Classes addClasse(@RequestBody Classes classes){
+//        return this.classesService.save(classes);
+//    }
 
     @PutMapping("/classes/edit/{classeId}")
     public ResponseEntity<String> modifyClasse(@PathVariable Integer classeID, @RequestBody Classes newClasse){

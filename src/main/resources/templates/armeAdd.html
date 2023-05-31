@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/armes/add" method="post">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Nom de l'arme</th>
+            <th>Dommage</th>
+            <th>Portée</th>
+            <th>Précision</th>
+            <th>Type de stat</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="text" name="nom_arme"/></td>
+            <td><input type="number" name="dommage" step="any"/></td>
+            <td><input type="number" name="portee" step="any"/></td>
+            <td><input type="number" name="precission"/></td>
+            <td>
+                <select name="type_stat">
+                    <option value="str">str</option>
+                    <option value="int">int</option>
+                    <option value="agi">agi</option>
+                </select>
+            </td>
+            <td>
+                <input type="hidden" name="armeId">
+                <button type="submit">Ajouter</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>

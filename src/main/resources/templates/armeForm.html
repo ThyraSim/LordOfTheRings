@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/armes/edit" method="post">
+<table border="1">
+  <thead>
+  <tr>
+    <th>Nom de l'arme</th>
+    <th>Dommage</th>
+    <th>Portée</th>
+    <th>Précision</th>
+    <th>Type de stat</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><input type="text" name="nom_arme" th:value="${arme.nom_arme}" /></td>
+    <td><input type="number" name="dommage" step="any" th:value="${arme.dommage}" /></td>
+    <td><input type="number" name="portee" step="any" th:value="${arme.portee}" /></td>
+    <td><input type="number" name="precission" th:value="${arme.precission}" /></td>
+    <td>
+      <select name="type_stat">
+        <option value="str" th:selected="${arme.type_stat == 'str'}">str</option>
+        <option value="int" th:selected="${arme.type_stat == 'int'}">int</option>
+        <option value="agi" th:selected="${arme.type_stat == 'agi'}">agi</option>
+      </select>
+    </td>
+    <td>
+      <input type="hidden" name="armeId" th:value="*{arme.id_arme}">
+      <button type="submit">Sauvegarder</button>
+    </td>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</form>
+</body>
+</html>
