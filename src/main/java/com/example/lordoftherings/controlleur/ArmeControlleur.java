@@ -14,36 +14,36 @@ public class ArmeControlleur {
     private ArmeService armeService;
 
     @Autowired
-    public ArmeControlleur(ArmeService armeService){
+    public ArmeControlleur(ArmeService armeService) {
         this.armeService = armeService;
     }
 
     @GetMapping("/armes")
-    public List<Arme> findAll(){
+    public List<Arme> findAll() {
         return armeService.findAll();
     }
 
     @GetMapping("/armes/{armeId}")
-    public String showCompte(@PathVariable Integer armeId){
+    public String showCompte(@PathVariable Integer armeId) {
 
         Arme tempArme = armeService.findById(armeId);
-        return  tempArme.toString();
+        return tempArme.toString();
     }
 
     @DeleteMapping("/armes/delete/{armeId}")
-    public String deleteArme(@PathVariable Integer armeId){
+    public String deleteArme(@PathVariable Integer armeId) {
         Arme tempArme = armeService.findById(armeId);
         armeService.delete(armeId);
         return "Arme supprimée : " + armeId;
     }
 
     @PostMapping("/armes")
-    public Arme addArme(@RequestBody Arme arme){
+    public Arme addArme(@RequestBody Arme arme) {
         return this.armeService.save(arme);
     }
 
     @PutMapping("/armes/edit/{armeId}")
-    public ResponseEntity<String> modifyArme(@PathVariable Integer armeId, @RequestBody Arme newArme){
+    public ResponseEntity<String> modifyArme(@PathVariable Integer armeId, @RequestBody Arme newArme) {
         Arme oldArme = armeService.findById(armeId);
 
         if (oldArme == null) {
@@ -63,4 +63,14 @@ public class ArmeControlleur {
 
         return ResponseEntity.ok("Item modified successfully");
     }
+
+//    @GetMapping("/recherche/armes/dmg/{dmg}")
+
+        @GetMapping("/recherche/armes/typeStat/{typeStat}")
+    public List<Arme> RechercheByTypeStat(String typeStat){
+
+        return armeService.rechercheArmeTypeStat(typeStat);
+
+    }
+
 }

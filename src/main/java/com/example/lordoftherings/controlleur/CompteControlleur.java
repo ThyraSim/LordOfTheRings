@@ -64,4 +64,14 @@ public class CompteControlleur {
 
         return ResponseEntity.ok("Item modified successfully");
     }
+
+    @GetMapping("/Recherche/comptesPrenium")
+    public List<Compte> recherComptePrenium(){
+        return compteService.rechercheComptePrenium();
+
+    }
+@GetMapping("/Recherche/compte/nomUtilisateur/{saisi}")
+    public List<Compte> rechercheNomUtilisateurContenant(@PathVariable String saisi){
+        return compteService.rechercheNomUtilisateurContenant(saisi);
+}
 }

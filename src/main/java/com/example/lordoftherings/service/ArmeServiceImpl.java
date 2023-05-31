@@ -3,6 +3,7 @@ package com.example.lordoftherings.service;
 import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.repository.ArmeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,4 +45,11 @@ public class ArmeServiceImpl implements ArmeService {
     public Arme save(Arme arme) {
         return this.armeRepository.save(arme);
     }
+
+    @Override
+    public List<Arme> rechercheArmeTypeStat(String typeStat) {
+        return armeRepository.findByTypeStat(typeStat);
+    }
+
+
 }

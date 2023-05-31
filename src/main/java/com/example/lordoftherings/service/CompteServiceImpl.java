@@ -45,4 +45,14 @@ public class CompteServiceImpl implements CompteService{
     public Compte save(Compte compte) {
         return this.compteRepository.save(compte);
     }
+
+    @Override
+    public List<Compte> rechercheComptePrenium() {
+        return compteRepository.findCompteByPremiumIsTrue();
+    }
+
+    @Override
+    public List<Compte> rechercheNomUtilisateurContenant(String saisi) {
+        return compteRepository.findByNom_utilisateur(saisi);
+    }
 }

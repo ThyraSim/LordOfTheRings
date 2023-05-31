@@ -14,4 +14,9 @@ public interface CompteService {
     Compte findById(Integer id_compte);
 
     Compte save(Compte compte);
+
+    List<Compte> rechercheComptePrenium();
+
+    List<Compte> rechercheNomUtilisateurContenant(String saisi);
+
 }
