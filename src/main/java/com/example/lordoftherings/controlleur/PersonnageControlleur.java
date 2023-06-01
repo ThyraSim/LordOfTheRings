@@ -40,7 +40,6 @@ public class PersonnageControlleur {
 
     @PostMapping("/personnages")
     public Personnage addpersonnage(@RequestBody Personnage personnage){
-
         return this.personnageService.save(personnage);
     }
 

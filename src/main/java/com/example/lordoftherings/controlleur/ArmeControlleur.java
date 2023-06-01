@@ -45,12 +45,8 @@ public class ArmeControlleur {
     }
 
     @PutMapping("/armes/edit/{armeId}")
-    public ResponseEntity<String> modifyArme(@PathVariable Integer armeId, @RequestBody Arme newArme){
+    public Arme modifyArme(@PathVariable Integer armeId, @RequestBody Arme newArme) {
         Arme oldArme = armeService.findById(armeId);
-
-        if (oldArme == null) {
-            return ResponseEntity.notFound().build();
-        }
 
         // Update the properties of the existing item with the new values
         oldArme.setNom_arme(newArme.getNom_arme());
@@ -61,8 +57,7 @@ public class ArmeControlleur {
         // ... update other properties as needed
 
         // Save the modified item
-        armeService.save(oldArme);
-
-        return ResponseEntity.ok("Item modified successfully");
+        return armeService.save(oldArme);
     }
+
 }
