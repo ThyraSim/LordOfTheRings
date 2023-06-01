@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<body>
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nom de la classe</th>
+    <th>Puissance</th>
+    <th>Agileté</th>
+    <th>Constitution</th>
+    <th>Intelligence</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="classe : ${classes}">
+    <td th:text="${classe.id_classe}"></td>
+    <td th:text="${classe.nom_classe}"></td>
+    <td th:text="${classe.puissance}"></td>
+    <td th:text="${classe.agilete}"></td>
+    <td th:text="${classe.constitution}"></td>
+    <td th:text="${classe.intelligence}"></td>
+    <td>
+      <form action="/classesChoice" method="post">
+        <input type="hidden" name="classeId" th:value="${classe.id_classe}">
+        <button type="submit">Edit</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<form action="/classes/addForm" method="post">
+  <button type="submit">Ajouter une classe</button>
+</form>
+<form action="/" method="post">
+  <button type="submit">Retour au menu principal</button>
+</form>
+</body>
+</body>
+</html>

@@ -14,4 +14,6 @@ public interface ClassesService {
     Classes findById(Integer id_classe);
 
     Classes save(Classes classes);
+
+    boolean isClasseInUse(Integer id_classe);
 }

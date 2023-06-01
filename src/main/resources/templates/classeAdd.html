@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/classes/add" method="post" enctype="multipart/form-data">
+  <table border="1">
+    <thead>
+    <tr>
+      <th>Nom de la classe</th>
+      <th>Puissance</th>
+      <th>Agileté</th>
+      <th>Constitution</th>
+      <th>Intelligence</th>
+      <th>Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><input type="text" name="nom_classe" required/></td>
+      <td><input type="number" name="puissance" required/></td>
+      <td><input type="number" name="agilete" required/></td>
+      <td><input type="number" name="constitution" required/></td>
+      <td><input type="number" name="intelligence" required/></td>
+      <td><input type="file" name="image" required/></td>
+      <td>
+        <input type="hidden" name="classeId">
+        <button type="submit">Ajouter</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+</body>
+</html>

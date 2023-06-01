@@ -31,6 +31,7 @@
       </tr>
       </tbody>
     </table>
+    <img th:src="${imagePath}" alt="Image" style="width: 200px; height: 200px;">
     <form action="/personnages/delete" method="post">
       <input type="hidden" name="personnageId" th:value="${personnage.id_personnage}">
       <button type="submit">Supprimer le personnage</button>

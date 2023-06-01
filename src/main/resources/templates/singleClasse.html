@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nom de la classe</th>
+    <th>Puissance</th>
+    <th>Agileté</th>
+    <th>Constitution</th>
+    <th>Intelligence</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td th:text="${classe.id_classe}"></td>
+    <td th:text="${classe.nom_classe}"></td>
+    <td th:text="${classe.puissance}"></td>
+    <td th:text="${classe.agilete}"></td>
+    <td th:text="${classe.constitution}"></td>
+    <td th:text="${classe.intelligence}"></td>
+    <td>
+      <form action="/classesChange" method="post">
+        <input type="hidden" name="classeId" th:value="${classe.id_classe}">
+        <button type="submit">Edit</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<form action="/classes/delete" method="post">
+  <input type="hidden" name="classeId" th:value="${classe.id_classe}">
+  <button type="submit">Supprimer la classe</button>
+</form>
+<img th:src="${imagePath}" alt="Image" style="width: 200px; height: 200px;">
+</body>
+</html>

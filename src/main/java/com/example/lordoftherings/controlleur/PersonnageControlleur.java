@@ -126,10 +126,11 @@ public class PersonnageControlleur {
         return "success";
     }
 
-    @GetMapping("/personnages/{id}")
-    public String showPersonnage(@PathVariable Integer id, Model model) {
-        Personnage personnage = personnageService.findByIdWithArmeAndClassesAndCompte(id);
+    @GetMapping("/personnages/{personnageId}")
+    public String showPersonnage(@PathVariable Integer personnageId, Model model) {
+        Personnage personnage = personnageService.findByIdWithArmeAndClassesAndCompte(personnageId);
         model.addAttribute("personnage", personnage);
+        model.addAttribute("imagePath", "/images/"+personnage.getClasse().getImage());
         return "personnageDetails";
     }
 

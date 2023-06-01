@@ -26,6 +26,7 @@ public class ArmeControlleur {
     public String choixArme(@RequestParam("armeId") String armeId){
         return "redirect:/armes/" + armeId;
     }
+
     @GetMapping("/armes")
     public String findAll(Model model,
                           @CookieValue(name = "sessionId", required = false) Integer sessionId){
@@ -41,7 +42,7 @@ public class ArmeControlleur {
     }
 
     @GetMapping("/armes/{armeId}")
-    public String showCompte(Model model,
+    public String showArme(Model model,
                              @PathVariable Integer armeId,
                              @CookieValue(name = "sessionId", required = false) Integer sessionId){
 

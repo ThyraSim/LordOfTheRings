@@ -1,9 +1,9 @@
 package com.example.lordoftherings.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Classes {
@@ -12,21 +12,26 @@ public class Classes {
     private Integer id_classe;
     private String nom_classe;
     private int puissance;
-    private int agileté;
+    private int agilete;
     private int constitution;
     private int intelligence;
+    private String image;
+
+    @OneToMany(mappedBy = "classe")
+    private List<Personnage> personnages = new ArrayList<>();
 
     public Classes(){
-
     }
 
-    public Classes(Integer id_classe, String nom_classe, int puissance, int agileté, int constitution, int intelligence) {
+    public Classes(Integer id_classe, String nom_classe, int puissance, int agilete, int constitution, int intelligence, String image, List<Personnage> personnages) {
         this.id_classe = id_classe;
         this.nom_classe = nom_classe;
         this.puissance = puissance;
-        this.agileté = agileté;
+        this.agilete = agilete;
         this.constitution = constitution;
         this.intelligence = intelligence;
+        this.image = image;
+        this.personnages = personnages;
     }
 
     public Integer getId_classe() {
@@ -53,12 +58,12 @@ public class Classes {
         this.puissance = Puissance;
     }
 
-    public int getAgileté() {
-        return agileté;
+    public int getAgilete() {
+        return agilete;
     }
 
-    public void setAgileté(int agileté) {
-        this.agileté = agileté;
+    public void setAgilete(int agilete) {
+        this.agilete = agilete;
     }
 
     public int getConstitution() {
@@ -77,13 +82,29 @@ public class Classes {
         this.intelligence = intelligence;
     }
 
+    public List<Personnage> getPersonnages() {
+        return personnages;
+    }
+
+    public void setPersonnages(List<Personnage> personnages) {
+        this.personnages = personnages;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Classes{" +
                 "id_classe=" + id_classe +
                 ", nom_classe='" + nom_classe + '\'' +
                 ", puissance=" + puissance +
-                ", agileté=" + agileté +
+                ", agilete=" + agilete +
                 ", constitution=" + constitution +
                 ", intelligence=" + intelligence +
                 '}';

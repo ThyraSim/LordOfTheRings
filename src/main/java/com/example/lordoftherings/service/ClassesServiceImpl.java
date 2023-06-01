@@ -1,5 +1,6 @@
 package com.example.lordoftherings.service;
 
+import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.repository.ClassesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,11 @@ public class ClassesServiceImpl implements ClassesService{
     @Override
     public Classes save(Classes classes) {
         return this.classesRepository.save(classes);
+    }
+
+    @Override
+    public boolean isClasseInUse(Integer id_classe) {
+        Classes classe = findById(id_classe);
+        return !classe.getPersonnages().isEmpty();
     }
 }

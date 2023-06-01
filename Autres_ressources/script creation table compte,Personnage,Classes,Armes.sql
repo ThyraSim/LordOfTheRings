@@ -26,17 +26,18 @@ CREATE TABLE Classes (
                          id_classe int NOT NULL AUTO_INCREMENT,
                          nom_classe varchar(60),
                          puissance int,
-                         agileté int,
+                         agilete int,
                          constitution int,
                          intelligence int,
+                         image varchar(60),
 
                          CONSTRAINT id_classe_pk PRIMARY KEY (id_classe)
 );
-INSERT INTO Classes (nom_classe,puissance,agileté,constitution,intelligence) VALUES
-                                                                                 ('Barbare',5,3,5,1),
-                                                                                 ('Magichat',1,3,2,5),
-                                                                                 ('Voleugnal',2,5,3,2),
-                                                                                 ('ChaGnal',3,3,3,3)
+INSERT INTO Classes (nom_classe,puissance,agilete,constitution,intelligence,image) VALUES
+                                                                                       ('Barbare',5,3,5,1,'Barbarian.jpg'),
+                                                                                       ('Magichat',1,3,2,5,'Magichat.jpg'),
+                                                                                       ('Wizard',2,5,3,2,'wizard.jpg'),
+                                                                                       ('Rogue',3,3,3,3,'Rogue.jpg')
 ;
 
 
@@ -83,3 +84,5 @@ INSERT INTO Personnage (nom_personnage,id_classe,id_arme,date_creation,niveau,id
 -- validation
 select * from Arme;
 select * from Compte;
+select * from personnage;
+select * from classes;
