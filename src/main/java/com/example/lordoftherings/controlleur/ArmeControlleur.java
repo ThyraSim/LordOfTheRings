@@ -29,6 +29,9 @@ public class ArmeControlleur {
         return armeService.findById(armeId);
     }
 
+    @GetMapping("/armes/recherche/dmg/{minDmg}/{maxDmg}")
+    public  List<Arme> rechercheArme(@PathVariable int minDmg,@PathVariable int maxDmg) {return armeService.findArmeByDommageBetween(minDmg, maxDmg);}
+
     @DeleteMapping("/armes/{armeId}")
     public String deleteArme(@PathVariable Integer armeId){
         Arme tempArme = armeService.findById(armeId);

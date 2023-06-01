@@ -44,4 +44,11 @@ public class ArmeServiceImpl implements ArmeService {
     public Arme save(Arme arme) {
         return this.armeRepository.save(arme);
     }
+
+    @Override
+    public List<Arme> findArmeByDommageBetween(int minDmg, int maxDmg) {
+        return armeRepository.findArmeByDommageBetween(minDmg,maxDmg);
+    }
+
+
 }
