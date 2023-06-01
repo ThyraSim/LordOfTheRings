@@ -1,6 +1,7 @@
 package com.example.lordoftherings.service;
 
 import com.example.lordoftherings.entity.Compte;
+import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.repository.CompteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,10 @@ public class CompteServiceImpl implements CompteService{
     @Override
     public Compte save(Compte compte) {
         return this.compteRepository.save(compte);
+    }
+
+    @Override
+    public Compte findCompteWithPersonnagesById(Integer compteId) {
+        return compteRepository.findCompteWithPersonnagesById(compteId);
     }
 }

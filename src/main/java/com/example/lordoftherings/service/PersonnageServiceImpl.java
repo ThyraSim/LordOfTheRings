@@ -46,4 +46,9 @@ public class PersonnageServiceImpl implements PersonnageService{
     public Personnage save(Personnage personnage) {
         return this.personnageRepository.save(personnage);
     }
+
+    @Override
+    public Personnage findByIdWithArmeAndClassesAndCompte(Integer id_personnage) {
+        return personnageRepository.findByIdWithArmeAndClassesAndCompte(id_personnage);
+    }
 }

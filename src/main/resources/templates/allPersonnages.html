@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Nom du personnage</th>
+    <th>Niveau</th>
+    <th>Compte</th>
+    <th>Classe</th>
+    <th>Arme</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="personnage : ${personnages}">
+    <td th:text="${personnage.nom_personnage}"></td>
+    <td th:text="${personnage.niveau}"></td>
+    <td th:text="${personnage.compte.nom_utilisateur}"></td>
+    <td th:text="${personnage.classe.nom_classe}"></td>
+    <td th:text="${personnage.arme.nom_arme}"></td>
+    <td>
+      <form action="/personnagesChoice" method="post">
+        <input type="hidden" name="personnageId" th:value="${personnage.id_personnage}">
+        <button type="submit">Voir</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<form action="/personnages/addForm" method="post">
+  <button type="submit">Ajouter un personnage</button>
+</form>
+</body>
+</html>
