@@ -1,6 +1,7 @@
 package com.example.lordoftherings.controlleur;
 
 import com.example.lordoftherings.entity.Arme;
+import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.service.ArmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -56,7 +57,14 @@ public class ArmeControlleur {
 
     @PostMapping("/armes/delete")
     public ResponseEntity<String> deleteArme(@RequestParam("armeId") Integer armeId){
-        Arme tempArme = armeService.findById(armeId);
+        Arme arme = armeService.findById(armeId);
+        List<Personnage> personnages = arme.getPersonnages();
+        if (armeService.isArmeInUse(armeId)) {
+            // At least one personnage is using the arme, return a response indicating it cannot be deleted
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .header(HttpHeaders.LOCATION, "/armes/redirectBadDelete")
+                    .build();
+        }
         armeService.delete(armeId);
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header(HttpHeaders.LOCATION, "/armes/redirectDelete")
@@ -68,6 +76,12 @@ public class ArmeControlleur {
         model.addAttribute("type", "deleted");
         model.addAttribute("item", "Arme");
         return "success";
+    }
+
+    @GetMapping("/armes/redirectBadDelete")
+    public String redirectBadDelete(Model model){
+        model.addAttribute("item", "Arme");
+        return "badDelete";
     }
 
     @PostMapping("/armes/add")

@@ -14,4 +14,6 @@ public interface ArmeService {
     Arme findById(Integer id_arme);
 
     Arme save(Arme arme);
+
+    boolean isArmeInUse(Integer id_arme);
 }

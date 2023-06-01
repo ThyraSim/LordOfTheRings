@@ -19,7 +19,7 @@ public class Compte {
     private Integer nombre_personnages;
 
     @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL)
-    private List<Personnage> personnages;
+    private List<Personnage> personnages = new ArrayList<>();
 
     public Compte() {
     }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/personnages/edit" method="post">
+  <table border="1">
+    <thead>
+    <tr>
+      <th>Nom du personnage</th>
+      <th>Niveau</th>
+      <th>Classe</th>
+      <th>Arme</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><input type="text" name="nom_personnage" th:value="${personnage.nom_personnage}" required></td>
+      <td><input type="number" name="niveau" th:value="${personnage.niveau}" required></td>
+      <td>
+        <select name="classeId" required>
+          <option th:each="classe : ${classes}" th:value="${classe.id_classe}" th:text="${classe.nom_classe}" th:selected="${personnage.classe != null && classe.nom_classe == personnage.classe.nom_classe}"></option>
+        </select>
+      </td>
+      <td>
+        <select name="armeId" required>
+          <option th:each="arme : ${armes}" th:value="${arme.id_arme}" th:text="${arme.nom_arme}" th:selected="${personnage.arme != null && arme.nom_arme == personnage.arme.nom_arme}"></option>
+        </select>
+      </td>
+      <td>
+        <input type="hidden" name="personnageId" th:value="*{personnage.id_personnage}">
+        <button type="submit">Sauvegarder</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+
+</body>
+</html>

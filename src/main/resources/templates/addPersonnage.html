@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/personnages/add" method="post">
+  <table border="1">
+    <thead>
+    <tr>
+      <th>Nom du personnage</th>
+      <th>Niveau</th>
+      <th>Classe</th>
+      <th>Arme</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><input type="text" name="nom_personnage" required></td>
+      <td><input type="number" name="niveau" required></td>
+      <td>
+      <select name="classeId" required>
+        <option th:each="classe : ${classes}" th:value="${classe.id_classe}" th:text="${classe.nom_classe}"></option>
+      </select>
+      </td>
+      <td>
+      <select name="armeId" required>
+        <option th:each="arme : ${armes}" th:value="${arme.id_arme}" th:text="${arme.nom_arme}"></option>
+      </select>
+      </td>
+      <td>
+        <input type="hidden" name="compteId" th:value="${compteId}">
+        <button type="submit">Ajouter</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+</body>
+</html>

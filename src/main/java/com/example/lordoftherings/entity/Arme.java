@@ -1,9 +1,9 @@
 package com.example.lordoftherings.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Arme {
@@ -16,6 +16,9 @@ public class Arme {
     private double portee; //en mètres
     private int precission; //sur 100
     private String type_stat;//str, agi, int
+
+    @OneToMany(mappedBy = "arme")
+    private List<Personnage> personnages = new ArrayList<>();
 
     public Arme() {
     }
@@ -75,6 +78,14 @@ public class Arme {
 
     public void setType_stat(String type_stat) {
         this.type_stat = type_stat;
+    }
+
+    public List<Personnage> getPersonnages() {
+        return personnages;
+    }
+
+    public void setPersonnages(List<Personnage> personnages) {
+        this.personnages = personnages;
     }
 
     @Override

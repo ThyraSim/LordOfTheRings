@@ -70,7 +70,7 @@ public class CompteControlleur {
     public ResponseEntity<String> deleteCompte(@RequestParam("compteId") Integer compteId,
                                                @CookieValue(name = "sessionId", required = false) Integer sessionId){
 
-        if(sessionId == compteId){
+        if(sessionId.equals(compteId)){
             ResponseCookie deletedCookie = ResponseCookie.from("sessionId", "")
                     .maxAge(0)
                     .httpOnly(true)

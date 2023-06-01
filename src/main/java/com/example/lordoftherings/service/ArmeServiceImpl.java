@@ -44,4 +44,10 @@ public class ArmeServiceImpl implements ArmeService {
     public Arme save(Arme arme) {
         return this.armeRepository.save(arme);
     }
+
+    @Override
+    public boolean isArmeInUse(Integer id_arme) {
+        Arme arme = findById(id_arme);
+        return !arme.getPersonnages().isEmpty();
+    }
 }
