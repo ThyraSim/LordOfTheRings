@@ -159,4 +159,9 @@ public class PersonnageControlleur {
         model.addAttribute("armes", armes);
         return "personnageForm";
     }
+
+    @GetMapping("/recherche/personnage/classe/{classe}")
+    public List<Personnage> recherchePersonnageByClasse(@PathVariable String classe) {
+        return personnageService.recherchePersonnageByClasse(classe);
+    }
 }

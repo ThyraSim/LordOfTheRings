@@ -48,7 +48,7 @@ public class PersonnageServiceImpl implements PersonnageService{
     }
 
     @Override
-    public Personnage findByIdWithArmeAndClassesAndCompte(Integer id_personnage) {
-        return personnageRepository.findByIdWithArmeAndClassesAndCompte(id_personnage);
+    public List<Personnage> recherchePersonnageByClasse(String classe) {
+        return personnageRepository.recherchePersonnageByClasse(classe);
     }
 }

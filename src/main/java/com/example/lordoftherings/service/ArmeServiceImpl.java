@@ -3,6 +3,7 @@ package com.example.lordoftherings.service;
 import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.repository.ArmeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,8 +47,9 @@ public class ArmeServiceImpl implements ArmeService {
     }
 
     @Override
-    public boolean isArmeInUse(Integer id_arme) {
-        Arme arme = findById(id_arme);
-        return !arme.getPersonnages().isEmpty();
+    public List<Arme> rechercheArmeTypeStat(String typeStat) {
+        return armeRepository.RecherchebyTypeStat(typeStat);
     }
+
+
 }

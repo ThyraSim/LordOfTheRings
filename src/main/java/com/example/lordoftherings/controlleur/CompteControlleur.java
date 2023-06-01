@@ -178,4 +178,14 @@ public class CompteControlleur {
     public String redirectFormAddCompte(){
         return "addCompte";
     }
+
+    @GetMapping("/Recherche/comptesPrenium")
+    public List<Compte> recherComptePrenium(){
+        return compteService.rechercheComptePrenium();
+
+    }
+@GetMapping("/Recherche/compte/nomUtilisateur/{saisi}")
+    public List<Compte> rechercheNomUtilisateurContenant(@PathVariable String saisi){
+        return compteService.rechercheNomUtilisateurContenant(saisi);
+}
 }

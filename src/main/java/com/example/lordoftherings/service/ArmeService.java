@@ -15,5 +15,7 @@ public interface ArmeService {
 
     Arme save(Arme arme);
 
-    boolean isArmeInUse(Integer id_arme);
+    List<Arme> rechercheArmeTypeStat(String typeStat);
+
+
 }
