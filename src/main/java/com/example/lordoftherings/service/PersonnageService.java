@@ -17,5 +17,5 @@ public interface PersonnageService {
 
     Personnage save(Personnage personnage);
 
-    Personnage findByIdWithArmeAndClasses(Integer id_personnage);
+    Personnage findByIdWithArmeAndClassesAndCompte(Integer id_personnage);
 }

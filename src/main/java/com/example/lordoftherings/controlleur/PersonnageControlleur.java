@@ -27,7 +27,7 @@ public class PersonnageControlleur {
     @GetMapping("/personnages/{personnageId}")
     public Personnage findById(@PathVariable Integer personnageId){
 
-        return personnageService.findByIdWithArmeAndClasses(personnageId);
+        return personnageService.findByIdWithArmeAndClassesAndCompte(personnageId);
     }
 
     @DeleteMapping("/personnages/{personnageId}")

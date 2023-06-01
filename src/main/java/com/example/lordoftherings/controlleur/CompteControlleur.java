@@ -27,7 +27,7 @@ public class CompteControlleur {
     @GetMapping("/comptes/{compteId}")
     public Compte findById(@PathVariable Integer compteId){
 
-        return compteService.findCompteWithPersonnagesById(compteId);
+        return compteService.findById(compteId);
     }
 
     @GetMapping("/")

@@ -1,5 +1,6 @@
 package com.example.lordoftherings.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,8 +13,6 @@ public class Personnage {
     private String date_creation;
     private Integer niveau;
 
-    private Integer id_compte;
-
     @ManyToOne
     @JoinColumn(name="id_arme")
     private Arme arme;
@@ -22,15 +21,20 @@ public class Personnage {
     @JoinColumn(name="id_classe")
     private Classes classe;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="id_compte")
+    private Compte compte;
+
     public Personnage() {
     }
 
-    public Personnage(Integer id_personnage, String nom_personnage, String date_creation, Integer niveau, Integer id_compte, Arme arme, Classes classe) {
+    public Personnage(Integer id_personnage, String nom_personnage, String date_creation, Integer niveau, Compte compte, Arme arme, Classes classe) {
         this.id_personnage = id_personnage;
         this.nom_personnage = nom_personnage;
         this.date_creation = date_creation;
         this.niveau = niveau;
-        this.id_compte = id_compte;
+        this.compte = compte;
         this.arme = arme;
         this.classe = classe;
     }
@@ -67,12 +71,12 @@ public class Personnage {
         this.niveau = niveau;
     }
 
-    public Integer getId_compte() {
-        return id_compte;
+    public Compte getCompte() {
+        return compte;
     }
 
-    public void setId_compte(Integer id_compte) {
-        this.id_compte = id_compte;
+    public void setCompte(Compte compte) {
+        this.compte = compte;
     }
 
     public Arme getArme() {
@@ -98,7 +102,7 @@ public class Personnage {
                 ", nom_personnage='" + nom_personnage + '\'' +
                 ", date_creation='" + date_creation + '\'' +
                 ", niveau=" + niveau +
-                ", id_compte=" + id_compte +
+                ", compte=" + compte +
                 ", arme=" + arme +
                 ", classe=" + classe +
                 '}';
