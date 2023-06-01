@@ -60,4 +60,9 @@ public class PersonnageControlleur {
 
         return ResponseEntity.ok("Item modified successfully");
     }
+
+    @GetMapping("/recherche/personnage/classe/{classe}")
+    public List<Personnage> recherchePersonnageByClasse(@PathVariable String classe) {
+        return personnageService.recherchePersonnageByClasse(classe);
+    }
 }

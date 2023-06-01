@@ -13,8 +13,8 @@ public interface CompteRepository extends JpaRepository<Compte, Integer> {
 
     List<Compte> findCompteByPremiumIsTrue();
 
-    @Query("select c From Compte c WHERE c.nom_utilisateur LIKE %:saisi%")
-    public List<Compte> findByNom_utilisateur (@PathVariable String saisi);
+    @Query("select c From Compte c WHERE LOWER(c.nom_utilisateur) LIKE CONCAT('%', LOWER(:saisi), '%')")
+    public List<Compte> findByNom_utilisateur ( String saisi);
 
 
 }

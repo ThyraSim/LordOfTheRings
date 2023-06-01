@@ -67,7 +67,7 @@ public class ArmeControlleur {
 //    @GetMapping("/recherche/armes/dmg/{dmg}")
 
         @GetMapping("/recherche/armes/typeStat/{typeStat}")
-    public List<Arme> RechercheByTypeStat(String typeStat){
+    public List<Arme> RechercheByTypeStat(@PathVariable String typeStat){
 
         return armeService.rechercheArmeTypeStat(typeStat);
 

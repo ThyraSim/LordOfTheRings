@@ -4,6 +4,7 @@ import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.repository.PersonnageRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface PersonnageService {
     Personnage findById(Integer id_personnage);
 
     Personnage save(Personnage personnage);
+
+    List<Personnage> recherchePersonnageByClasse(String classe);
+
+
 }

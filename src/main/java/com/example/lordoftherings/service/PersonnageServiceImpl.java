@@ -46,4 +46,9 @@ public class PersonnageServiceImpl implements PersonnageService{
     public Personnage save(Personnage personnage) {
         return this.personnageRepository.save(personnage);
     }
+
+    @Override
+    public List<Personnage> recherchePersonnageByClasse(String classe) {
+        return personnageRepository.recherchePersonnageByClasse(classe);
+    }
 }

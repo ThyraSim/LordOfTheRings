@@ -48,7 +48,7 @@ public class ArmeServiceImpl implements ArmeService {
 
     @Override
     public List<Arme> rechercheArmeTypeStat(String typeStat) {
-        return armeRepository.findByTypeStat(typeStat);
+        return armeRepository.RecherchebyTypeStat(typeStat);
     }
 
 

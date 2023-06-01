@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface ArmeRepository extends JpaRepository<Arme, Integer> {
 
-    @Query("SELECT a FROM Arme a WHERE a.type_stat = :typeStat")
-  List<Arme> findByTypeStat(@Param("typeStat") String typeStat);
+    @Query("SELECT a FROM Arme a WHERE LOWER(a.type_stat) = LOWER( :typeStat)")
+  List<Arme> RecherchebyTypeStat(@Param("typeStat") String typeStat);
 
 
 }
