@@ -20,5 +20,7 @@ public interface PersonnageService {
 
     List<Personnage> recherchePersonnageByClasse(String classe);
 
+    Personnage findByIdWithArmeAndClassesAndCompte(Integer id_personnage);
+
 
 }

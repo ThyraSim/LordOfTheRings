@@ -1,5 +1,6 @@
 package com.example.lordoftherings.controlleur;
 
+import com.example.lordoftherings.entity.Personnage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import com.example.lordoftherings.service.CompteService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,21 +23,21 @@ public class CompteControlleur {
     private CompteService compteService;
 
     @Autowired
-    public CompteControlleur(CompteService compteService){
+    public CompteControlleur(CompteService compteService) {
         this.compteService = compteService;
     }
 
     @PostMapping("/comptesChoice")
-    public String choixCompte(@RequestParam("compteId") String compteId){
+    public String choixCompte(@RequestParam("compteId") String compteId) {
         return "redirect:/comptes/" + compteId;
     }
 
     @GetMapping("/comptes")
     public String findAll(Model model,
-                          @CookieValue(name = "sessionId", required = false) Integer sessionId){
-        if(sessionId != null && sessionId != 0){
-            return "redirect:/comptes/"+sessionId;
-        } else if(sessionId == null){
+                          @CookieValue(name = "sessionId", required = false) Integer sessionId) {
+        if (sessionId != null && sessionId != 0) {
+            return "redirect:/comptes/" + sessionId;
+        } else if (sessionId == null) {
             return "login";
         }
 
@@ -45,7 +47,7 @@ public class CompteControlleur {
     }
 
     @GetMapping("/comptes/redirectDelete")
-    public String redirectDelete(Model model){
+    public String redirectDelete(Model model) {
         model.addAttribute("type", "deleted");
         model.addAttribute("item", "Compte");
         return "success";
@@ -54,23 +56,24 @@ public class CompteControlleur {
     @GetMapping("/comptes/{compteId}")
     public String showCompte(Model model,
                              @PathVariable Integer compteId,
-                             @CookieValue(name = "sessionId", required = false) Integer sessionId){
-        if(sessionId != null && sessionId != 0 && sessionId != compteId){
-            return "redirect:/comptes/"+sessionId;
-        } else if(sessionId == null){
+                             @CookieValue(name = "sessionId", required = false) Integer sessionId) {
+        if (sessionId != null && sessionId != 0 && sessionId != compteId) {
+            return "redirect:/comptes/" + sessionId;
+        } else if (sessionId == null) {
             return "login";
         }
 
         Compte tempCompte = compteService.findById(compteId);
         model.addAttribute("compte", tempCompte);
+
         return "compteUser";
     }
 
     @PostMapping("/comptes/delete")
     public ResponseEntity<String> deleteCompte(@RequestParam("compteId") Integer compteId,
-                                               @CookieValue(name = "sessionId", required = false) Integer sessionId){
+                                               @CookieValue(name = "sessionId", required = false) Integer sessionId) {
 
-        if(sessionId.equals(compteId)){
+        if (sessionId.equals(compteId)) {
             ResponseCookie deletedCookie = ResponseCookie.from("sessionId", "")
                     .maxAge(0)
                     .httpOnly(true)
@@ -100,8 +103,8 @@ public class CompteControlleur {
     public ResponseEntity<String> addCompte(@RequestParam("nom_utilisateur") String nomUtilisateur,
                                             @RequestParam("motDePasse") String motDePasse,
                                             @RequestParam(value = "premium", required = false) Boolean premium,
-                                            @RequestParam("nombre_personnages") int nombrePersonnages){
-        if(premium == null){
+                                            @RequestParam("nombre_personnages") int nombrePersonnages) {
+        if (premium == null) {
             premium = false;
         }
         Compte newCompte = new Compte();
@@ -122,7 +125,7 @@ public class CompteControlleur {
     }
 
     @GetMapping("/comptes/redirectAdd")
-    public String redirectAdd(Model model){
+    public String redirectAdd(Model model) {
         model.addAttribute("type", "added");
         model.addAttribute("item", "Compte");
         return "success";
@@ -133,14 +136,14 @@ public class CompteControlleur {
                                                @RequestParam("nom_utilisateur") String nomUtilisateur,
                                                @RequestParam("motDePasse") String motDePasse,
                                                @RequestParam(value = "premium", required = false) Boolean premium,
-                                               @RequestParam("nombre_personnages") int nombrePersonnages){
+                                               @RequestParam("nombre_personnages") int nombrePersonnages) {
         Compte oldCompte = compteService.findById(compteId);
 
         if (oldCompte == null) {
             return ResponseEntity.notFound().build();
         }
 
-        if(premium == null){
+        if (premium == null) {
             premium = false;
         }
 
@@ -161,31 +164,45 @@ public class CompteControlleur {
     }
 
     @GetMapping("/comptes/redirectEdit")
-    public String redirectEdit(Model model){
+    public String redirectEdit(Model model) {
         model.addAttribute("type", "edited");
         model.addAttribute("item", "Compte");
         return "success";
     }
 
     @PostMapping("/comptesChange")
-    public String sendChangeForm(@RequestParam("compteId") Integer compteId, Model model){
+    public String sendChangeForm(@RequestParam("compteId") Integer compteId, Model model) {
         Compte tempCompte = compteService.findById(compteId);
         model.addAttribute("compte", tempCompte);
         return "compteForm";
     }
 
     @PostMapping("/comptes/addForm")
-    public String redirectFormAddCompte(){
+    public String redirectFormAddCompte() {
         return "addCompte";
     }
 
     @GetMapping("/Recherche/comptesPrenium")
-    public List<Compte> recherComptePrenium(){
+    public List<Compte> recherComptePrenium() {
         return compteService.rechercheComptePrenium();
 
     }
-@GetMapping("/Recherche/compte/nomUtilisateur/{saisi}")
-    public List<Compte> rechercheNomUtilisateurContenant(@PathVariable String saisi){
-        return compteService.rechercheNomUtilisateurContenant(saisi);
-}
+
+    @GetMapping("/Recherche/compte/personnage/classe/{saisi}")
+    public String rechercheNomUtilisateurContenant(@RequestParam Integer compteId, @RequestParam("RechercheClasse") String saisi, Model model) {
+        Compte tempCompte = compteService.findById(compteId);
+        model.addAttribute("compte", tempCompte);
+
+        List<Personnage> listeFiltrer = new ArrayList<>();
+
+
+        for (Personnage personnage : tempCompte.getPersonnages()) {
+            if (personnage.getClasse().getNom_classe().equals(saisi)) {
+                listeFiltrer.add(personnage);
+            }
+        }
+
+        return "compteUser";
+
+    }
 }

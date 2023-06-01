@@ -5,6 +5,11 @@
     <title>CompteUser</title>
 </head>
 <body>
+
+<form action="/" method="post">
+<label>Recherche par classe</label><input type="text" name="RechercheClasse"> <button type="submit"> Rechercher</button>
+    <input type="hidden" name="compteId" th:value="${compte.id_compte}">
+</form>
     <table border="1">
       <thead>
       <tr>
