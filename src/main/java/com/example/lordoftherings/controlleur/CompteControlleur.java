@@ -1,5 +1,6 @@
 package com.example.lordoftherings.controlleur;
 
+import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.service.CompteService;
@@ -21,6 +22,12 @@ public class CompteControlleur {
     @GetMapping("/comptes")
     public List<Compte> findAll(){
         return compteService.findAll();
+    }
+
+    @GetMapping("/comptes/{compteId}")
+    public Compte findById(@PathVariable Integer compteId){
+
+        return compteService.findCompteWithPersonnagesById(compteId);
     }
 
     @GetMapping("/")

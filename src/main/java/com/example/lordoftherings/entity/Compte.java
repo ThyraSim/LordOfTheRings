@@ -1,9 +1,9 @@
 package com.example.lordoftherings.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -13,22 +13,25 @@ public class Compte {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_compte;
     private String nom_utilisateur;
+    private String motDePasse;
     private String date_creation;
     private boolean premium;
     private Integer nombre_personnages;
 
-    private String motDePasse;
+    @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL)
+    private List<Personnage> personnages = new ArrayList<>();
 
     public Compte() {
     }
 
-    public Compte(Integer id_compte, String nom_utilisateur, String date_creation, boolean premium, Integer nombre_personnages, String motDePasse) {
+    public Compte(Integer id_compte, String nom_utilisateur, String motDePasse, String date_creation, boolean premium, Integer nombre_personnages, List<Personnage> personnages) {
         this.id_compte = id_compte;
         this.nom_utilisateur = nom_utilisateur;
         this.date_creation = date_creation;
         this.premium = premium;
         this.nombre_personnages = nombre_personnages;
         this.motDePasse = motDePasse;
+        this.personnages = personnages;
     }
 
     public Integer getId_compte() {
@@ -79,15 +82,24 @@ public class Compte {
         this.motDePasse = motDePasse;
     }
 
+    public List<Personnage> getPersonnages() {
+        return personnages;
+    }
+
+    public void setPersonnages(List<Personnage> personnages) {
+        this.personnages = personnages;
+    }
+
     @Override
     public String toString() {
         return "Compte{" +
                 "id_compte=" + id_compte +
                 ", nom_utilisateur='" + nom_utilisateur + '\'' +
+                ", motDePasse='" + motDePasse + '\'' +
                 ", date_creation='" + date_creation + '\'' +
                 ", premium=" + premium +
                 ", nombre_personnages=" + nombre_personnages +
-                ", motDePasse='" + motDePasse + '\'' +
+                ", personnages=" + personnages +
                 '}';
     }
 }

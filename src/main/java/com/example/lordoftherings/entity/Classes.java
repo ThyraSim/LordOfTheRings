@@ -12,7 +12,7 @@ public class Classes {
     private Integer id_classe;
     private String nom_classe;
     private int puissance;
-    private int agileté;
+    private int agilete;
     private int constitution;
     private int intelligence;
 
@@ -20,11 +20,11 @@ public class Classes {
 
     }
 
-    public Classes(Integer id_classe, String nom_classe, int puissance, int agileté, int constitution, int intelligence) {
+    public Classes(Integer id_classe, String nom_classe, int puissance, int agilete, int constitution, int intelligence) {
         this.id_classe = id_classe;
         this.nom_classe = nom_classe;
         this.puissance = puissance;
-        this.agileté = agileté;
+        this.agilete = agilete;
         this.constitution = constitution;
         this.intelligence = intelligence;
     }
@@ -53,12 +53,12 @@ public class Classes {
         this.puissance = Puissance;
     }
 
-    public int getAgileté() {
-        return agileté;
+    public int getAgilete() {
+        return agilete;
     }
 
-    public void setAgileté(int agileté) {
-        this.agileté = agileté;
+    public void setAgilete(int agilete) {
+        this.agilete = Classes.this.agilete;
     }
 
     public int getConstitution() {
@@ -83,7 +83,7 @@ public class Classes {
                 "id_classe=" + id_classe +
                 ", nom_classe='" + nom_classe + '\'' +
                 ", puissance=" + puissance +
-                ", agileté=" + agileté +
+                ", agilete=" + agilete +
                 ", constitution=" + constitution +
                 ", intelligence=" + intelligence +
                 '}';

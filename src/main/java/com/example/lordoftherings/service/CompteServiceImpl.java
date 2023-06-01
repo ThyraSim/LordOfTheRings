@@ -45,4 +45,9 @@ public class CompteServiceImpl implements CompteService{
     public Compte save(Compte compte) {
         return this.compteRepository.save(compte);
     }
+
+    @Override
+    public Compte findCompteWithPersonnagesById(Integer compteId) {
+        return compteRepository.findCompteWithPersonnagesById(compteId);
+    }
 }

@@ -14,4 +14,6 @@ public interface CompteService {
     Compte findById(Integer id_compte);
 
     Compte save(Compte compte);
+
+    Compte findCompteWithPersonnagesById(Integer id_compte);
 }

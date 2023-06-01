@@ -34,6 +34,12 @@ public class ClassesControlleur {
         return this.classesService.save(classes);
     }
 
+    @GetMapping("/classes/{classeId}")
+    public Classes findById(@PathVariable Integer classeId){
+
+        return classesService.findById(classeId);
+    }
+
     @PutMapping("/classes/edit/{classeId}")
     public ResponseEntity<String> modifyClasse(@PathVariable Integer classeID, @RequestBody Classes newClasse){
         Classes oldClasses = classesService.findById(classeID);
@@ -44,7 +50,7 @@ public class ClassesControlleur {
 
         // Update the properties of the existing item with the new values
         oldClasses.setNom_classe(newClasse.getNom_classe());
-        oldClasses.setAgileté(newClasse.getAgileté());
+        oldClasses.setAgilete(newClasse.getAgilete());
         oldClasses.setConstitution(newClasse.getConstitution());
         oldClasses.setPuissance(newClasse.getPuissance());
         oldClasses.setIntelligence(newClasse.getIntelligence());

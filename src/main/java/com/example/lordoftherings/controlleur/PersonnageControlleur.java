@@ -24,6 +24,12 @@ public class PersonnageControlleur {
         return personnageService.findAll();
     }
 
+    @GetMapping("/personnages/{personnageId}")
+    public Personnage findById(@PathVariable Integer personnageId){
+
+        return personnageService.findByIdWithArmeAndClasses(personnageId);
+    }
+
     @DeleteMapping("/personnages/{personnageId}")
     public String deletePersonnage(@PathVariable Integer personnageId){
 
@@ -48,11 +54,8 @@ public class PersonnageControlleur {
 
         // Update the properties of the existing item with the new values
         oldPersonnage.setNom_personnage(newPersonnage.getNom_personnage());
-        oldPersonnage.setId_classe(newPersonnage.getId_classe());
         oldPersonnage.setDate_creation(newPersonnage.getDate_creation());
         oldPersonnage.setNiveau(newPersonnage.getNiveau());
-        oldPersonnage.setId_arme(newPersonnage.getId_arme());
-        oldPersonnage.setId_compte(newPersonnage.getId_compte());
         // ... update other properties as needed
 
         // Save the modified item

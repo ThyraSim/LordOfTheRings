@@ -1,6 +1,7 @@
 package com.example.lordoftherings.controlleur;
 
 import com.example.lordoftherings.entity.Arme;
+import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.service.ArmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,12 @@ public class ArmeControlleur {
     @GetMapping("/armes")
     public List<Arme> findAll(){
         return armeService.findAll();
+    }
+
+    @GetMapping("/arme/{armeId}")
+    public Arme findById(@PathVariable Integer armeId){
+
+        return armeService.findById(armeId);
     }
 
     @DeleteMapping("/armes/{armeId}")

@@ -1,9 +1,6 @@
 package com.example.lordoftherings.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Personnage {
@@ -12,23 +9,30 @@ public class Personnage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_personnage;
     private String nom_personnage;
-    private Integer id_classe;
-    private Integer id_arme;
     private String date_creation;
     private Integer niveau;
+
     private Integer id_compte;
+
+    @ManyToOne
+    @JoinColumn(name="id_arme")
+    private Arme arme;
+
+    @ManyToOne
+    @JoinColumn(name="id_classe")
+    private Classes classe;
 
     public Personnage() {
     }
 
-    public Personnage(Integer id_personnage, String nom_personnage, Integer id_classe, Integer id_arme, String date_creation, Integer niveau, Integer id_compte) {
+    public Personnage(Integer id_personnage, String nom_personnage, String date_creation, Integer niveau, Integer id_compte, Arme arme, Classes classe) {
         this.id_personnage = id_personnage;
         this.nom_personnage = nom_personnage;
-        this.id_classe = id_classe;
-        this.id_arme = id_arme;
         this.date_creation = date_creation;
         this.niveau = niveau;
         this.id_compte = id_compte;
+        this.arme = arme;
+        this.classe = classe;
     }
 
     public Integer getId_personnage() {
@@ -45,22 +49,6 @@ public class Personnage {
 
     public void setNom_personnage(String nom_personnage) {
         this.nom_personnage = nom_personnage;
-    }
-
-    public Integer getId_classe() {
-        return id_classe;
-    }
-
-    public void setId_classe(Integer id_classe) {
-        this.id_classe = id_classe;
-    }
-
-    public Integer getId_arme() {
-        return id_arme;
-    }
-
-    public void setId_arme(Integer id_arme) {
-        this.id_arme = id_arme;
     }
 
     public String getDate_creation() {
@@ -87,16 +75,32 @@ public class Personnage {
         this.id_compte = id_compte;
     }
 
+    public Arme getArme() {
+        return arme;
+    }
+
+    public void setArme(Arme arme) {
+        this.arme = arme;
+    }
+
+    public Classes getClasse() {
+        return classe;
+    }
+
+    public void setClasse(Classes classe) {
+        this.classe = classe;
+    }
+
     @Override
     public String toString() {
         return "Personnage{" +
                 "id_personnage=" + id_personnage +
                 ", nom_personnage='" + nom_personnage + '\'' +
-                ", id_classe=" + id_classe +
-                ", id_arme=" + id_arme +
                 ", date_creation='" + date_creation + '\'' +
                 ", niveau=" + niveau +
                 ", id_compte=" + id_compte +
+                ", arme=" + arme +
+                ", classe=" + classe +
                 '}';
     }
 }
