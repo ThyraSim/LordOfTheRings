@@ -20,7 +20,7 @@
       <td th:text="${personnage.nom_personnage}"></td>
       <td th:text="${personnage.niveau}"></td>
       <td th:text="${personnage.compte.nom_utilisateur}"></td>
-      <td th:text="${personnage.classe.nom_classe}"></td>
+      <td th:text="${personnage.classe.nom_classe}"> </td>
       <td th:text="${personnage.arme.nom_arme}"></td>
       <td>
         <form action="/personnagesChange" method="post">
@@ -28,6 +28,7 @@
           <button type="submit">Edit</button>
         </form>
       </td>
+
       </tr>
       </tbody>
     </table>
@@ -36,5 +37,10 @@
       <input type="hidden" name="personnageId" th:value="${personnage.id_personnage}">
       <button type="submit">Supprimer le personnage</button>
     </form>
+    <a th:href="@{'/JSON/classes/'+${personnage.classe.id_classe}}">JSON detail classe </a><br>
+     <a th:href="@{'/JSON/armes/'+${personnage.arme.id_arme}}">JSON detail Arme </a><br>
+    <a th:href="@{'/JSON/comptes/'+${personnage.compte.id_compte}}">JSON detail Compte </a>
+
+
 </body>
 </html>

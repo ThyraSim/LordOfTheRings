@@ -24,7 +24,7 @@ import java.util.List;
             return armeService.findAll();
         }
 
-        @GetMapping("/JSON/arme/{armeId}")
+        @GetMapping("/JSON/armes/{armeId}")
         public Arme findById(@PathVariable Integer armeId){
 
             return armeService.findById(armeId);

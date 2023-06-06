@@ -24,7 +24,10 @@
             <input type="hidden" name="compteId" th:value="${compte.id_compte}">
             <button type="submit">Edit</button>
           </form>
+
         </td>
+        <td>  <a th:href="@{'/JSON/comptes/'+${compte.id_compte}}">JSON detail Compte </a></td>
+
       </tr>
       </tbody>
     </table>
@@ -51,6 +54,7 @@
                     <button type="submit">Voir</button>
                 </form>
             </td>
+            <td> <a th:href="@{'/JSON/personnages/' + ${personnage.id_personnage}}"> Voir Json</a> </td>
         </tr>
         </tbody>
     </table>
@@ -65,6 +69,17 @@
         <input type="hidden" name="compteId" th:value="${compte.id_compte}">
         <button type="submit">Ajouter un personnage</button>
     </form>
-<a href=""> Voir la liste des personnages sous forme JSON </a>
+
+    <div >
+        <h1>JSON MENU</h1>
+        <div>
+            <h2>Liste des classes et arme</h2>
+        <a href="http://localhost:8080/JSON/armes"> Voir la liste des armes sous forme JSON </a> <br>
+        <a href="http://localhost:8080/JSON/classes"> Voir la liste des classes sous forme JSON </a>
+        </div>
+
+
+    </div>
+
 </body>
 </html>
