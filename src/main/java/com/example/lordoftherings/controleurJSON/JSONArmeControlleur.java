@@ -33,6 +33,9 @@ import java.util.List;
         @GetMapping("/JSON/armes/recherche/dmg/{minDmg}/{maxDmg}")
         public  List<Arme> rechercheArme(@PathVariable int minDmg,@PathVariable int maxDmg) {return armeService.findArmeByDommageBetween(minDmg, maxDmg);}
 
+        @GetMapping("/JSON/armes/recherche/classe/{classe}")
+        public  List<Arme> findArmesByClasse (@PathVariable String classe) {return armeService.findArmesByClasse(classe);}
+
         @DeleteMapping("/JSON/armes/{armeId}")
         public String deleteArme(@PathVariable Integer armeId){
             Arme tempArme = armeService.findById(armeId);

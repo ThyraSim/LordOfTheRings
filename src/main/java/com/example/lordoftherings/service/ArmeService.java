@@ -18,4 +18,6 @@ public interface ArmeService {
     boolean isArmeInUse(Integer id_arme);
 
     List<Arme> findArmeByDommageBetween(int minDmg,int maxDmg);
+
+    List<Arme> findArmesByClasse (String classe);
 }

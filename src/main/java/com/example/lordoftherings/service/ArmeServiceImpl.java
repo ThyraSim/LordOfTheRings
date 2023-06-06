@@ -55,4 +55,9 @@ public class ArmeServiceImpl implements ArmeService {
         return armeRepository.findArmeByDommageBetween(minDmg,maxDmg);
     }
 
+    @Override
+    public List<Arme> findArmesByClasse(String classe) {
+        return armeRepository.findArmesByClasse(classe);
+    }
+
 }
