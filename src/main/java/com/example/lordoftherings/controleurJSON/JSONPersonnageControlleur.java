@@ -21,18 +21,18 @@ import java.util.List;
             this.personnageService = personnageService;
         }
 
-        @GetMapping("JSON/personnages")
+        @GetMapping("/JSON/personnages")
         public List<Personnage> findAll(){
             return personnageService.findAll();
         }
 
-        @GetMapping("JSON/personnages/{personnageId}")
+        @GetMapping("/JSON/personnages/{personnageId}")
         public Personnage findById(@PathVariable Integer personnageId){
 
             return personnageService.findByIdWithArmeAndClassesAndCompte(personnageId);
         }
 
-        @DeleteMapping("JSON/personnages/{personnageId}")
+        @DeleteMapping("/JSON/personnages/{personnageId}")
         public String deletePersonnage(@PathVariable Integer personnageId){
 
             Personnage temppersonnage = personnageService.findById(personnageId);
@@ -40,12 +40,12 @@ import java.util.List;
             return  "personnage supprimé : " + personnageId;
         }
 
-        @PostMapping("JSON/personnages")
+        @PostMapping("/JSON/personnages")
         public Personnage addpersonnage(@RequestBody Personnage personnage){
             return this.personnageService.save(personnage);
         }
 
-        @PutMapping("JSON/personnages/edit/{personnageId}")
+        @PutMapping("/JSON/personnages/edit/{personnageId}")
         public ResponseEntity<String> modifyClasse(@PathVariable Integer personnageId, @RequestBody Personnage newPersonnage){
             Personnage oldPersonnage = personnageService.findById(personnageId);
 

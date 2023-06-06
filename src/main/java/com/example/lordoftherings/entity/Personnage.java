@@ -2,6 +2,7 @@ package com.example.lordoftherings.entity;
 
 import com.example.lordoftherings.service.ArmeService;
 import com.example.lordoftherings.service.ArmeServiceImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,8 @@ public class Personnage {
     private String date_creation;
     private Integer niveau;
 
+
+
     @ManyToOne
     @JoinColumn(name="id_compte")
     private Compte compte;
@@ -22,6 +25,7 @@ public class Personnage {
     @JoinColumn(name="id_arme")
     private Arme arme;
 
+
     @ManyToOne
     @JoinColumn(name="id_classe")
     private Classes classe;
@@ -29,8 +33,8 @@ public class Personnage {
     public Personnage() {
     }
 
-    public Personnage(Integer id_personnage, String nom_personnage, String date_creation, Integer niveau, Compte compte, Arme arme, Classes classe) {
-        this.id_personnage = id_personnage;
+    public Personnage(String nom_personnage, String date_creation, Integer niveau, Compte compte, Arme arme, Classes classe) {
+
         this.nom_personnage = nom_personnage;
         this.date_creation = date_creation;
         this.niveau = niveau;
@@ -86,7 +90,7 @@ public class Personnage {
                 ", nom_personnage='" + nom_personnage + '\'' +
                 ", date_creation='" + date_creation + '\'' +
                 ", niveau=" + niveau +
-                ", compte=" + compte +
+
                 ", arme=" + arme +
                 ", classe=" + classe +
                 '}';

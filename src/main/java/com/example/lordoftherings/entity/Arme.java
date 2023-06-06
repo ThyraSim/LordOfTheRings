@@ -1,5 +1,6 @@
 package com.example.lordoftherings.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -17,14 +18,15 @@ public class Arme {
     private int precission; //sur 100
     private String type_stat;//str, agi, int
 
+    @JsonIgnore
     @OneToMany(mappedBy = "arme")
     private List<Personnage> personnages = new ArrayList<>();
 
     public Arme() {
     }
 
-    public Arme(Integer id_arme, String nom_arme, double dommage, double portee, int precission, String type_stat) {
-        this.id_arme = id_arme;
+    public Arme( String nom_arme, double dommage, double portee, int precission, String type_stat) {
+
         this.nom_arme = nom_arme;
         this.dommage = dommage;
         this.portee = portee;

@@ -1,5 +1,6 @@
 package com.example.lordoftherings.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -17,21 +18,22 @@ public class Classes {
     private int intelligence;
     private String image;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "classe")
     private List<Personnage> personnages = new ArrayList<>();
 
     public Classes(){
     }
 
-    public Classes(Integer id_classe, String nom_classe, int puissance, int agilete, int constitution, int intelligence, String image, List<Personnage> personnages) {
-        this.id_classe = id_classe;
+    public Classes( String nom_classe, int puissance, int agilete, int constitution, int intelligence, String image) {
+
         this.nom_classe = nom_classe;
         this.puissance = puissance;
         this.agilete = agilete;
         this.constitution = constitution;
         this.intelligence = intelligence;
         this.image = image;
-        this.personnages = personnages;
+
     }
 
     public Integer getId_classe() {

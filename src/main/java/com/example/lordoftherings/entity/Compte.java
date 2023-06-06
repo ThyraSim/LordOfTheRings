@@ -1,5 +1,6 @@
 package com.example.lordoftherings.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -18,21 +19,28 @@ public class Compte {
     private boolean premium;
     private Integer nombre_personnages;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL)
     private List<Personnage> personnages = new ArrayList<>();
 
     public Compte() {
     }
 
-    public Compte(Integer id_compte, String nom_utilisateur, String motDePasse, String date_creation, boolean premium, Integer nombre_personnages, List<Personnage> personnages) {
-        this.id_compte = id_compte;
+    public Compte( String nom_utilisateur, String motDePasse, String date_creation, boolean premium, Integer nombre_personnages) {
+
         this.nom_utilisateur = nom_utilisateur;
         this.date_creation = date_creation;
         this.premium = premium;
         this.nombre_personnages = nombre_personnages;
         this.motDePasse = motDePasse;
-        this.personnages = personnages;
+
     }
+//    public Compte( String nom_utilisateur, String motDePasse) {
+//
+//        this.nom_utilisateur = nom_utilisateur;
+//        this.motDePasse = motDePasse;
+//
+//    }
 
     public Integer getId_compte() {
         return id_compte;

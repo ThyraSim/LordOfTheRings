@@ -19,33 +19,33 @@ import java.util.List;
             this.armeService = armeService;
         }
 
-        @GetMapping("JSON/armes")
+        @GetMapping("/JSON/armes")
         public List<Arme> findAll(){
             return armeService.findAll();
         }
 
-        @GetMapping("JSON/arme/{armeId}")
+        @GetMapping("/JSON/arme/{armeId}")
         public Arme findById(@PathVariable Integer armeId){
 
             return armeService.findById(armeId);
         }
 
-        @GetMapping("JSON/armes/recherche/dmg/{minDmg}/{maxDmg}")
+        @GetMapping("/JSON/armes/recherche/dmg/{minDmg}/{maxDmg}")
         public  List<Arme> rechercheArme(@PathVariable int minDmg,@PathVariable int maxDmg) {return armeService.findArmeByDommageBetween(minDmg, maxDmg);}
 
-        @DeleteMapping("JSON/armes/{armeId}")
+        @DeleteMapping("/JSON/armes/{armeId}")
         public String deleteArme(@PathVariable Integer armeId){
             Arme tempArme = armeService.findById(armeId);
             armeService.delete(armeId);
             return "Arme supprimée : " + armeId;
         }
 
-        @PostMapping("JSON/armes")
+        @PostMapping("/JSON/armes")
         public Arme addArme(@RequestBody Arme arme){
             return this.armeService.save(arme);
         }
 
-        @PutMapping("JSON/armes/edit/{armeId}")
+        @PutMapping("/JSON/armes/edit/{armeId}")
         public Arme modifyArme(@PathVariable Integer armeId, @RequestBody Arme newArme) {
             Arme oldArme = armeService.findById(armeId);
 

@@ -35,7 +35,7 @@ import java.util.List;
 
 
 
-        @DeleteMapping("JSON/comptes/{compteId}")
+        @DeleteMapping("/JSON/comptes/{compteId}")
         public String deleteCompte(@PathVariable Integer compteId){
 
             Compte tempCompte = compteService.findById(compteId);
@@ -43,13 +43,13 @@ import java.util.List;
             return  "Compte supprimé : " + compteId;
         }
 
-        @PostMapping("JSON/comptes")
+        @PostMapping("/JSON/comptes")
         public Compte addCompte(@RequestBody Compte compte){
 
             return this.compteService.save(compte);
         }
 
-        @PutMapping("JSON/comptes/edit/{compteId}")
+        @PutMapping("/JSON/comptes/edit/{compteId}")
         public ResponseEntity<String> modifyClasse(@PathVariable Integer compteId, @RequestBody Compte newCompte){
             Compte oldCompte = compteService.findById(compteId);
 
