@@ -22,23 +22,20 @@ import java.util.List;
             this.compteService = compteService;
         }
 
-        @GetMapping("/comptes")
+        @GetMapping("JSON/comptes")
         public List<Compte> findAll(){
             return compteService.findAll();
         }
 
-        @GetMapping("/comptes/{compteId}")
+        @GetMapping("JSON/comptes/{compteId}")
         public Compte findById(@PathVariable Integer compteId){
 
             return compteService.findById(compteId);
         }
 
-        @GetMapping("/")
-        public String sayHello(){
-            return "Hello World";
-        }
 
-        @DeleteMapping("/comptes/{compteId}")
+
+        @DeleteMapping("JSON/comptes/{compteId}")
         public String deleteCompte(@PathVariable Integer compteId){
 
             Compte tempCompte = compteService.findById(compteId);
@@ -46,13 +43,13 @@ import java.util.List;
             return  "Compte supprimé : " + compteId;
         }
 
-        @PostMapping("/comptes")
+        @PostMapping("JSON/comptes")
         public Compte addCompte(@RequestBody Compte compte){
 
             return this.compteService.save(compte);
         }
 
-        @PutMapping("/comptes/edit/{compteId}")
+        @PutMapping("JSON/comptes/edit/{compteId}")
         public ResponseEntity<String> modifyClasse(@PathVariable Integer compteId, @RequestBody Compte newCompte){
             Compte oldCompte = compteService.findById(compteId);
 

@@ -19,30 +19,30 @@ import java.util.List;
             this.classesService = classesService;
         }
 
-        @GetMapping("/classes")
+        @GetMapping("JSON/classes")
         public List<Classes> findAll(){
             return classesService.findAll();
         }
 
-        @DeleteMapping("/classes/{classeId}")
+        @DeleteMapping("JSON/classes/{classeId}")
         public String deleteClasse(@PathVariable Integer classeId){
             Classes tempClasse = classesService.findById(classeId);
             classesService.delete(classeId);
             return "Classe supprimée : " + classeId;
         }
 
-        @PostMapping("/classes")
+        @PostMapping("JSON/classes")
         public Classes addClasse(@RequestBody Classes classes){
             return this.classesService.save(classes);
         }
 
-        @GetMapping("/classes/{classeId}")
+        @GetMapping("JSON/classes/{classeId}")
         public Classes findById(@PathVariable Integer classeId){
 
             return classesService.findById(classeId);
         }
 
-        @PutMapping("/classes/edit/{classeId}")
+        @PutMapping("JSON/classes/edit/{classeId}")
         public Classes modifyClasse(@PathVariable Integer classeId, @RequestBody Classes newClasse){
             Classes oldClasses = classesService.findById(classeId);
 
