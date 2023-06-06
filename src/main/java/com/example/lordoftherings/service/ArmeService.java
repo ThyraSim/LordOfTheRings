@@ -16,4 +16,6 @@ public interface ArmeService {
     Arme save(Arme arme);
 
     boolean isArmeInUse(Integer id_arme);
+
+    List<Arme> findArmeByDommageBetween(int minDmg,int maxDmg);
 }

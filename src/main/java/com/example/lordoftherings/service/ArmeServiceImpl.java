@@ -50,4 +50,9 @@ public class ArmeServiceImpl implements ArmeService {
         Arme arme = findById(id_arme);
         return !arme.getPersonnages().isEmpty();
     }
+    @Override
+    public List<Arme> findArmeByDommageBetween(int minDmg, int maxDmg) {
+        return armeRepository.findArmeByDommageBetween(minDmg,maxDmg);
+    }
+
 }
