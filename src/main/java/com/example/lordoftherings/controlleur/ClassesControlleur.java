@@ -4,6 +4,7 @@ import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.service.ClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +26,13 @@ public class ClassesControlleur {
 
     @DeleteMapping("/classes/{classeId}")
     public String deleteClasse(@PathVariable Integer classeId){
-        Classes tempClasse = classesService.findById(classeId);
-        classesService.delete(classeId);
-        return "Classe supprimée : " + classeId;
+        try {
+            Classes tempClasse = classesService.findById(classeId);
+            classesService.delete(classeId);
+            return "Classe supprimée : " + classeId;
+        } catch (DataIntegrityViolationException e){
+            return "Cette classe est utilisée, elle ne peut donc pas être supprimée";
+        }
     }
 
     @PostMapping("/classes")

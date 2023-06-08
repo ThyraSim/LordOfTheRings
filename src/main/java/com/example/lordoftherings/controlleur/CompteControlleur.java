@@ -45,28 +45,22 @@ public class CompteControlleur {
 
     @PostMapping("/comptes")
     public Compte addCompte(@RequestBody Compte compte){
-
+        compte.setNombre_personnages(0);
         return this.compteService.save(compte);
     }
 
     @PutMapping("/comptes/edit/{compteId}")
-    public ResponseEntity<String> modifyClasse(@PathVariable Integer compteId, @RequestBody Compte newCompte){
+    public Compte modifyClasse(@PathVariable Integer compteId, @RequestBody Compte newCompte){
         Compte oldCompte = compteService.findById(compteId);
-
-        if (oldCompte == null) {
-            return ResponseEntity.notFound().build();
-        }
 
         // Update the properties of the existing item with the new values
         oldCompte.setDate_creation(newCompte.getDate_creation());
         oldCompte.setPremium(newCompte.isPremium());
+        oldCompte.setDate_creation(newCompte.getDate_creation());
         oldCompte.setNom_utilisateur(newCompte.getNom_utilisateur());
         oldCompte.setNombre_personnages(newCompte.getNombre_personnages());
         // ... update other properties as needed
 
-        // Save the modified item
-        compteService.save(oldCompte);
-
-        return ResponseEntity.ok("Item modified successfully");
+        return compteService.save(oldCompte);
     }
 }
