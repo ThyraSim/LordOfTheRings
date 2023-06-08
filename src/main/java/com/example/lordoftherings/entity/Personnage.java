@@ -15,8 +15,7 @@ public class Personnage {
     private String date_creation;
     private Integer niveau;
 
-
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="id_compte")
     private Compte compte;

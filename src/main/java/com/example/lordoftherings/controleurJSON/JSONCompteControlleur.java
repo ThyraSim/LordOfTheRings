@@ -33,8 +33,6 @@ import java.util.List;
             return compteService.findById(compteId);
         }
 
-
-
         @DeleteMapping("/JSON/comptes/{compteId}")
         public String deleteCompte(@PathVariable Integer compteId){
 

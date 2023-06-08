@@ -19,7 +19,6 @@ public class Compte {
     private boolean premium;
     private Integer nombre_personnages;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL)
     private List<Personnage> personnages = new ArrayList<>();
 
