@@ -12,7 +12,6 @@
       <th>Nom d'utilisateur</th>
       <th>Mot de passe</th>
       <th>Premium</th>
-      <th>Nombre de personnages</th>
     </tr>
     </thead>
     <tbody>
@@ -20,7 +19,6 @@
       <td><input type="text" name="nom_utilisateur" th:value="${compte.nom_utilisateur}"></td>
       <td><input type="password" name="motDePasse" th:value="${compte.motDePasse}"></td>
       <td><input type="checkbox" name="premium" th:checked="${compte.premium}"></td>
-      <td><input type="number" name="nombre_personnages" th:value="${compte.nombre_personnages}"></td>
       <td>
           <input type="hidden" name="compteId" th:value="*{compte.id_compte}">
           <button type="submit">Sauvegarder</button>

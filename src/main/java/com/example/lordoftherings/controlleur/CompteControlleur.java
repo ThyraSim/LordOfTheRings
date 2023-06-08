@@ -99,8 +99,7 @@ public class CompteControlleur {
     @PostMapping("/comptes/add")
     public ResponseEntity<String> addCompte(@RequestParam("nom_utilisateur") String nomUtilisateur,
                                             @RequestParam("motDePasse") String motDePasse,
-                                            @RequestParam(value = "premium", required = false) Boolean premium,
-                                            @RequestParam("nombre_personnages") int nombrePersonnages){
+                                            @RequestParam(value = "premium", required = false) Boolean premium){
         if(premium == null){
             premium = false;
         }
@@ -112,7 +111,6 @@ public class CompteControlleur {
         String formattedDate = currentDate.format(formatter);
         newCompte.setDate_creation(formattedDate);
         newCompte.setNom_utilisateur(nomUtilisateur);
-        newCompte.setNombre_personnages(nombrePersonnages);
 
         compteService.save(newCompte);
 
@@ -132,8 +130,7 @@ public class CompteControlleur {
     public ResponseEntity<String> modifyClasse(@RequestParam("compteId") Integer compteId,
                                                @RequestParam("nom_utilisateur") String nomUtilisateur,
                                                @RequestParam("motDePasse") String motDePasse,
-                                               @RequestParam(value = "premium", required = false) Boolean premium,
-                                               @RequestParam("nombre_personnages") int nombrePersonnages){
+                                               @RequestParam(value = "premium", required = false) Boolean premium){
         Compte oldCompte = compteService.findById(compteId);
 
         if (oldCompte == null) {
@@ -147,7 +144,6 @@ public class CompteControlleur {
         // Update the properties of the existing item with the new values
         oldCompte.setPremium(premium);
         oldCompte.setNom_utilisateur(nomUtilisateur);
-        oldCompte.setNombre_personnages(nombrePersonnages);
         oldCompte.setMotDePasse(motDePasse);
         // ... update other properties as needed
 

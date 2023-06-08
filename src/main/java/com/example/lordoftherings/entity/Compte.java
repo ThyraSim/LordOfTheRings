@@ -17,7 +17,6 @@ public class Compte {
     private String motDePasse;
     private String date_creation;
     private boolean premium;
-    private Integer nombre_personnages;
 
     @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL)
     private List<Personnage> personnages = new ArrayList<>();
@@ -25,21 +24,14 @@ public class Compte {
     public Compte() {
     }
 
-    public Compte( String nom_utilisateur, String motDePasse, String date_creation, boolean premium, Integer nombre_personnages) {
+    public Compte( String nom_utilisateur, String motDePasse, String date_creation, boolean premium) {
 
         this.nom_utilisateur = nom_utilisateur;
         this.date_creation = date_creation;
         this.premium = premium;
-        this.nombre_personnages = nombre_personnages;
         this.motDePasse = motDePasse;
 
     }
-//    public Compte( String nom_utilisateur, String motDePasse) {
-//
-//        this.nom_utilisateur = nom_utilisateur;
-//        this.motDePasse = motDePasse;
-//
-//    }
 
     public Integer getId_compte() {
         return id_compte;
@@ -73,14 +65,6 @@ public class Compte {
         this.premium = premium;
     }
 
-    public Integer getNombre_personnages() {
-        return nombre_personnages;
-    }
-
-    public void setNombre_personnages(Integer nombre_personnages) {
-        this.nombre_personnages = nombre_personnages;
-    }
-
     public String getMotDePasse() {
         return motDePasse;
     }
@@ -105,7 +89,6 @@ public class Compte {
                 ", motDePasse='" + motDePasse + '\'' +
                 ", date_creation='" + date_creation + '\'' +
                 ", premium=" + premium +
-                ", nombre_personnages=" + nombre_personnages +
                 ", personnages=" + personnages +
                 '}';
     }

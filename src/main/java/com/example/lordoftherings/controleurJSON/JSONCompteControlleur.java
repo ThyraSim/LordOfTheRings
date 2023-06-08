@@ -59,7 +59,6 @@ import java.util.List;
             oldCompte.setDate_creation(newCompte.getDate_creation());
             oldCompte.setPremium(newCompte.isPremium());
             oldCompte.setNom_utilisateur(newCompte.getNom_utilisateur());
-            oldCompte.setNombre_personnages(newCompte.getNombre_personnages());
             // ... update other properties as needed
 
             // Save the modified item

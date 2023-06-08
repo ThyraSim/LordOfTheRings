@@ -86,11 +86,11 @@ public class ConfigStart implements CommandLineRunner {
         List<Compte> initCompteList = new ArrayList<>();
 
 
-        initCompteList.add(new Compte("Chat", "Poisson", "2023-05-23", false, 1));
-        initCompteList.add(new Compte("Orignal", "Cheese", "2023-05-19", true, 2));
-        initCompteList.add(new Compte("Marmotte", "Castor", "1991-09-20", true, 10));
-        initCompteList.add(new Compte("Tyzral", "Dino", "2001-05-03", true, 99));
-        initCompteList.add(new Compte("Knik", "Knok", "1991-09-20", true, 99));
+        initCompteList.add(new Compte("Chat", "Poisson", "2023-05-23", false));
+        initCompteList.add(new Compte("Orignal", "Cheese", "2023-05-19", true));
+        initCompteList.add(new Compte("Marmotte", "Castor", "1991-09-20", true));
+        initCompteList.add(new Compte("Tyzral", "Dino", "2001-05-03", true));
+        initCompteList.add(new Compte("Knik", "Knok", "1991-09-20", true));
 
 
 
