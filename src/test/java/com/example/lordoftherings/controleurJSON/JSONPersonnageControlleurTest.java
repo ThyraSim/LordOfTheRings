@@ -7,22 +7,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class JSONPersonnageControlleurTest {
 
     @Test
-    void findAll() {
+    void testFindAll() {
     }
 
     @Test
-    void findById() {
+    void testFindById() {
     }
 
     @Test
-    void deletePersonnage() {
+    void testDeletePersonnage() {
     }
 
     @Test
-    void addpersonnage() {
+    void testAddpersonnage() {
     }
 
     @Test
-    void modifyClasse() {
+    void testModifyPersonnage() {
     }
 }

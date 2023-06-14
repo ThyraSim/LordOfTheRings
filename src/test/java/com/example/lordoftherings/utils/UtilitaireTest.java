@@ -17,6 +17,6 @@ class UtilitaireTest {
     }
 
     @Test
-    void getFileExtension() {
+    void testGetFileExtension() {
     }
 }

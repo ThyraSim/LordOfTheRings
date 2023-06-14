@@ -48,7 +48,7 @@ import java.util.List;
         }
 
         @PutMapping("/JSON/comptes/edit/{compteId}")
-        public ResponseEntity<String> modifyClasse(@PathVariable Integer compteId, @RequestBody Compte newCompte){
+        public ResponseEntity<String> modifyCompte(@PathVariable Integer compteId, @RequestBody Compte newCompte){
             Compte oldCompte = compteService.findById(compteId);
 
             if (oldCompte == null) {

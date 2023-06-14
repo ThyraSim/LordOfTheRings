@@ -7,22 +7,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class JSONCompteControlleurTest {
 
     @Test
-    void findAll() {
+    void testFindAll() {
     }
 
     @Test
-    void findById() {
+    void testFindById() {
     }
 
     @Test
-    void deleteCompte() {
+    void testDeleteCompte() {
     }
 
     @Test
-    void addCompte() {
+    void testAddCompte() {
     }
 
     @Test
-    void modifyClasse() {
+    void testModifyCompte() {
     }
 }

@@ -7,30 +7,30 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArmeServiceImplTest {
 
     @Test
-    void findAll() {
+    void testFindAll() {
     }
 
     @Test
-    void delete() {
+    void testDelete() {
     }
 
     @Test
-    void findById() {
+    void testFindById() {
     }
 
     @Test
-    void save() {
+    void testSave() {
     }
 
     @Test
-    void isArmeInUse() {
+    void testIsArmeInUse() {
     }
 
     @Test
-    void findArmeByDommageBetween() {
+    void testFindArmeByDommageBetween() {
     }
 
     @Test
-    void findArmesByClasse() {
+    void testFindArmesByClasse() {
     }
 }

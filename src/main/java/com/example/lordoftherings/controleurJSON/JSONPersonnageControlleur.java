@@ -46,7 +46,7 @@ import java.util.List;
         }
 
         @PutMapping("/JSON/personnages/edit/{personnageId}")
-        public ResponseEntity<String> modifyClasse(@PathVariable Integer personnageId, @RequestBody Personnage newPersonnage){
+        public ResponseEntity<String> modifyPersonnage(@PathVariable Integer personnageId, @RequestBody Personnage newPersonnage){
             Personnage oldPersonnage = personnageService.findById(personnageId);
 
             if (oldPersonnage == null) {

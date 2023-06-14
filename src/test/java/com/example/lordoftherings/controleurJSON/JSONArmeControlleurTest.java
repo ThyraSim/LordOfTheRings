@@ -11,26 +11,26 @@ class JSONArmeControlleurTest {
     }
 
     @Test
-    void findById() {
+    void testFindById() {
     }
 
     @Test
-    void rechercheArme() {
+    void testRechercheArme() {
     }
 
     @Test
-    void findArmesByClasse() {
+    void testFindArmesByClasse() {
     }
 
     @Test
-    void deleteArme() {
+    void testDeleteArme() {
     }
 
     @Test
-    void addArme() {
+    void testAddArme() {
     }
 
     @Test
-    void modifyArme() {
+    void testModifyArme() {
     }
 }
