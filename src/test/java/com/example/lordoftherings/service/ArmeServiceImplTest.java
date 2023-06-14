@@ -42,6 +42,14 @@ class ArmeServiceImplTest {
         armeService.delete(dernierId);
 
     }
+    @Test
+    void testFindByIdNotExist() {
+
+        int idNotExist = 0;
+        assertThrows(RuntimeException.class,
+                () -> armeService.findById(idNotExist),
+                "L'arme non trouvée - " + idNotExist);
+    }
 
     @Test
     void testSave() {

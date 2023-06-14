@@ -43,6 +43,14 @@ class ClassesServiceImplTest {
 
         classesService.delete(dernierId);
     }
+    @Test
+    void testFindByIdNotExist() {
+
+        int idNotExist = 0;
+        assertThrows(RuntimeException.class,
+                () -> classesService.findById(idNotExist),
+                "La classe non trouvée -" + idNotExist);
+    }
 
     @Test
     void testSave() {

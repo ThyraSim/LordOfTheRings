@@ -49,6 +49,15 @@ class PersonnageServiceImplTest {
     }
 
     @Test
+    void testFindByIdNotExist() {
+
+        int idNotExist = 0;
+        assertThrows(RuntimeException.class,
+                () -> personnageService.findById(idNotExist),
+                "Le personnage non trouvé -" + idNotExist);
+    }
+
+    @Test
     void testSave() {
     }
 

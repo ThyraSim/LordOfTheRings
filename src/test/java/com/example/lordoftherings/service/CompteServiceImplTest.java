@@ -40,6 +40,15 @@ class CompteServiceImplTest {
     }
 
     @Test
+    void testFindByIdNotExist() {
+
+        int idNotExist = 0;
+        assertThrows(RuntimeException.class,
+                () -> compteService.findById(idNotExist),
+                "Le compte non trouvé -" + idNotExist);
+    }
+
+    @Test
     void testSave() {
     }
 
