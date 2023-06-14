@@ -16,6 +16,29 @@ class CompteServiceImplTest {
     private CompteService compteService;
     @Test
     void testFindAll() {
+        Compte compte1 = new Compte();
+        compte1.setNom_utilisateur("compte1");
+        Compte compte2 = new Compte();
+        compte2.setNom_utilisateur("compte2");
+        Compte compte3 = new Compte();
+        compte3.setNom_utilisateur("compte3");
+
+        compteService.save(compte1);
+        compteService.save(compte2);
+        compteService.save(compte3);
+
+        List<Compte> compteList = compteService.findAll();
+        int compte3Id = compteList.get(compteList.size() - 1).getId_compte();
+        int compte2Id = compteList.get(compteList.size() - 2).getId_compte();
+        int compte1Id = compteList.get(compteList.size() - 3).getId_compte();
+
+        assertEquals("compte1", compteService.findById(compte1Id).getNom_utilisateur());
+        assertEquals("compte2", compteService.findById(compte2Id).getNom_utilisateur());
+        assertEquals("compte3", compteService.findById(compte3Id).getNom_utilisateur());
+
+        compteService.delete(compte3Id);
+        compteService.delete(compte2Id);
+        compteService.delete(compte1Id);
     }
 
     @Test

@@ -20,6 +20,30 @@ class PersonnageServiceImplTest {
 
     @Test
     void testFindAll() {
+
+        Personnage personnage1 = new Personnage();
+        personnage1.setNom_personnage("personnage1");
+        Personnage personnage2 = new Personnage();
+        personnage2.setNom_personnage("personnage2");
+        Personnage personnage3 = new Personnage();
+        personnage3.setNom_personnage("personnage3");
+
+        personnageService.save(personnage1);
+        personnageService.save(personnage2);
+        personnageService.save(personnage3);
+
+        List<Personnage> personnageList = personnageService.findAll();
+        int personnage3Id = personnageList.get(personnageList.size() - 1).getId_personnage();
+        int personnage2Id = personnageList.get(personnageList.size() - 2).getId_personnage();
+        int personnage1Id = personnageList.get(personnageList.size() - 3).getId_personnage();
+
+        assertEquals("personnage1", personnageService.findById(personnage1Id).getNom_personnage());
+        assertEquals("personnage2", personnageService.findById(personnage2Id).getNom_personnage());
+        assertEquals("personnage3", personnageService.findById(personnage3Id).getNom_personnage());
+
+        personnageService.delete(personnage3Id);
+        personnageService.delete(personnage2Id);
+        personnageService.delete(personnage1Id);
     }
 
     @Test

@@ -16,11 +16,38 @@ class ArmeServiceImplTest {
     @Autowired
     private ArmeService armeService;
 
-    @Autowired
-    private ArmeRepository armeRepository;
 
     @Test
     void testFindAll() {
+        Arme arme1 = new Arme();
+        arme1.setNom_arme("arme1");
+        Arme arme2 = new Arme();
+        arme2.setNom_arme("arme2");
+        Arme arme3 = new Arme();
+        arme3.setNom_arme("arme3");
+
+        armeService.save(arme1);
+        armeService.save(arme2);
+        armeService.save(arme3);
+
+        List<Arme> armeList= armeService.findAll();
+        int arme3Id = armeList.get(armeList.size()-1).getId_arme();
+        int arme2Id = armeList.get(armeList.size()-2).getId_arme();
+        int arme1Id = armeList.get(armeList.size()-3).getId_arme();
+
+
+
+        assertEquals("arme1",armeService.findById(arme1Id).getNom_arme());
+        assertEquals("arme2",armeService.findById(arme2Id).getNom_arme());
+        assertEquals("arme3",armeService.findById(arme3Id).getNom_arme());
+
+
+
+        armeService.delete(arme3Id);
+        armeService.delete(arme2Id);
+        armeService.delete(arme1Id);
+
+
     }
 
     @Test

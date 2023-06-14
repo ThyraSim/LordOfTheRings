@@ -23,6 +23,29 @@ class ClassesServiceImplTest {
 
     @Test
     void testFindAll() {
+        Classes classe1 = new Classes();
+        classe1.setNom_classe("classe1");
+        Classes classe2 = new Classes();
+        classe2.setNom_classe("classe2");
+        Classes classe3 = new Classes();
+        classe3.setNom_classe("classe3");
+
+        classesService.save(classe1);
+        classesService.save(classe2);
+        classesService.save(classe3);
+
+        List<Classes> classeList = classesService.findAll();
+        int classe3Id = classeList.get(classeList.size() - 1).getId_classe();
+        int classe2Id = classeList.get(classeList.size() - 2).getId_classe();
+        int classe1Id = classeList.get(classeList.size() - 3).getId_classe();
+
+        assertEquals("classe1", classesService.findById(classe1Id).getNom_classe());
+        assertEquals("classe2", classesService.findById(classe2Id).getNom_classe());
+        assertEquals("classe3", classesService.findById(classe3Id).getNom_classe());
+
+        classesService.delete(classe3Id);
+        classesService.delete(classe2Id);
+        classesService.delete(classe1Id);
     }
 
     @Test
