@@ -49,7 +49,33 @@ class ClassesServiceImplTest {
     }
 
     @Test
-    void testDelete() {
+    void testDeleteExist() {
+        Classes classe = new Classes();
+
+
+        classesService.save(classe);
+        List<Classes> classeList = classesService.findAll();
+        int dernierId = classeList.get(classeList.size() - 1).getId_classe();
+
+        classesService.delete(dernierId);
+
+        assertThrows(RuntimeException.class,
+                () -> classesService.findById(dernierId),
+                "La classe non trouvée -" + dernierId);
+    }
+
+    @Test
+    void testDeleteNotExist() {
+
+        int idNotExist = 0;
+
+        int sizeBefore = classesService.findAll().size();
+
+        classesService.delete(idNotExist);
+
+        int sizeAfter = classesService.findAll().size();
+
+        assertEquals(sizeBefore, sizeAfter);
     }
 
     @Test

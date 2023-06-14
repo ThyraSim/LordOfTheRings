@@ -5,8 +5,10 @@ import com.example.lordoftherings.repository.ArmeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,17 +32,15 @@ class ArmeServiceImplTest {
         armeService.save(arme2);
         armeService.save(arme3);
 
-        List<Arme> armeList= armeService.findAll();
-        int arme3Id = armeList.get(armeList.size()-1).getId_arme();
-        int arme2Id = armeList.get(armeList.size()-2).getId_arme();
-        int arme1Id = armeList.get(armeList.size()-3).getId_arme();
+        List<Arme> armeList = armeService.findAll();
+        int arme3Id = armeList.get(armeList.size() - 1).getId_arme();
+        int arme2Id = armeList.get(armeList.size() - 2).getId_arme();
+        int arme1Id = armeList.get(armeList.size() - 3).getId_arme();
 
 
-
-        assertEquals("arme1",armeService.findById(arme1Id).getNom_arme());
-        assertEquals("arme2",armeService.findById(arme2Id).getNom_arme());
-        assertEquals("arme3",armeService.findById(arme3Id).getNom_arme());
-
+        assertEquals("arme1", armeService.findById(arme1Id).getNom_arme());
+        assertEquals("arme2", armeService.findById(arme2Id).getNom_arme());
+        assertEquals("arme3", armeService.findById(arme3Id).getNom_arme());
 
 
         armeService.delete(arme3Id);
@@ -51,24 +51,51 @@ class ArmeServiceImplTest {
     }
 
     @Test
-    void testDelete() {
+    void testDeleteExist() {
+        Arme arme = new Arme();
+        arme.setNom_arme("test");
+        armeService.save(arme);
+        List<Arme> armeList = armeService.findAll();
+        int dernierId = armeList.get(armeList.size() - 1).getId_arme();
+
+        armeService.delete(dernierId);
+
+        assertThrows(RuntimeException.class,
+                () -> armeService.findById(dernierId),
+                "L'arme non trouvée - " + dernierId);
     }
 
     @Test
+    void testDeleteNotExist() {
+
+        int idNotExist = 0;
+
+        int sizeBefore = armeService.findAll().size();
+
+        armeService.delete(idNotExist);
+
+        int sizeAfter = armeService.findAll().size();
+
+        assertEquals(sizeBefore, sizeAfter);
+    }
+
+
+    @Test
     void testFindByIdExist() {
-        Arme arme= new Arme();
+        Arme arme = new Arme();
         arme.setNom_arme("test");
         armeService.save(arme);
 
-        List<Arme> armeList= armeService.findAll();
-        int dernierId = armeList.get(armeList.size()-1).getId_arme();
+        List<Arme> armeList = armeService.findAll();
+        int dernierId = armeList.get(armeList.size() - 1).getId_arme();
         armeService.findById(dernierId).getNom_arme();
 
-        assertEquals("test",armeService.findById(dernierId).getNom_arme() );
+        assertEquals("test", armeService.findById(dernierId).getNom_arme());
 
         armeService.delete(dernierId);
 
     }
+
     @Test
     void testFindByIdNotExist() {
 

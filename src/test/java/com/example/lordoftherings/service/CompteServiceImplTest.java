@@ -1,5 +1,6 @@
 package com.example.lordoftherings.service;
 
+import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Compte;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,32 @@ class CompteServiceImplTest {
     }
 
     @Test
-    void testDelete() {
+    void testDeleteExist() {
+        Compte compte = new Compte();
+
+        compteService.save(compte);
+        List<Compte> compteList = compteService.findAll();
+        int dernierId = compteList.get(compteList.size() - 1).getId_compte();
+
+        compteService.delete(dernierId);
+
+        assertThrows(RuntimeException.class,
+                () -> compteService.findById(dernierId),
+                "Le compte non trouvé -" + dernierId);
+    }
+
+    @Test
+    void testDeleteNotExist() {
+
+        int idNotExist = 0;
+
+        int sizeBefore = compteService.findAll().size();
+
+        compteService.delete(idNotExist);
+
+        int sizeAfter = compteService.findAll().size();
+
+        assertEquals(sizeBefore, sizeAfter);
     }
 
     @Test
