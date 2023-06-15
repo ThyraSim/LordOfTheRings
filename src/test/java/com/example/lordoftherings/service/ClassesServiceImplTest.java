@@ -90,7 +90,7 @@ class ClassesServiceImplTest {
         int dernierId = classesList.get(classesList.size()-1).getId_classe();
         classesService.findById(dernierId).getNom_classe();
 
-        assertEquals("test",classesService.findById(dernierId).getId_classe() );
+        assertEquals("test",classesService.findById(dernierId).getNom_classe() );
 
         classesService.delete(dernierId);
     }
