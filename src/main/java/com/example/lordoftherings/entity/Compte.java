@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -91,5 +92,18 @@ public class Compte {
                 ", premium=" + premium +
                 ", personnages=" + personnages +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Compte compte = (Compte) o;
+        return premium == compte.premium && Objects.equals(id_compte, compte.id_compte) && Objects.equals(nom_utilisateur, compte.nom_utilisateur) && Objects.equals(motDePasse, compte.motDePasse) && Objects.equals(date_creation, compte.date_creation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_compte, nom_utilisateur, motDePasse, date_creation, premium);
     }
 }

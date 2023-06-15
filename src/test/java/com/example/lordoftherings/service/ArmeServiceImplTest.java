@@ -1,12 +1,14 @@
 package com.example.lordoftherings.service;
 
 import com.example.lordoftherings.entity.Arme;
+import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.repository.ArmeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,9 @@ class ArmeServiceImplTest {
 
     @Autowired
     private ArmeService armeService;
+
+    @Autowired
+    private PersonnageService personnageService;
 
 
     @Test
@@ -106,7 +111,71 @@ class ArmeServiceImplTest {
     }
 
     @Test
-    void testSave() {
+    void testSaveArmeOnly() {
+        Arme armeTest = new Arme();
+        armeTest.setNom_arme("ArmeTest");
+        armeTest.setDommage(0);
+        armeTest.setPortee(80);
+        armeTest.setType_stat("test");
+
+
+        armeService.save(armeTest);
+
+
+        List<Arme> armeList = armeService.findAll();
+        int dernierId = armeList.get(armeList.size() - 1).getId_arme();
+        Arme findarme = armeService.findById(dernierId);
+
+        assertEquals(armeTest,findarme);
+
+
+        armeService.delete(dernierId);
+    }
+
+    @Test
+    void testSaveArmeWithPersonnageNoCascade() {
+        //ici pas de cascade donc pas suposser trouvé
+
+        Arme armeTest = new Arme();
+        armeTest.setNom_arme("ArmeTest");
+        armeTest.setDommage(0);
+        armeTest.setPortee(80);
+        armeTest.setType_stat("test");
+
+        List<Personnage> listPersonnage = new ArrayList<>();
+
+        Personnage personnageTest1 = new Personnage();
+        personnageTest1.setNom_personnage("test1");
+        personnageTest1.setDate_creation("0000-00-00");
+        personnageTest1.setNiveau(-1);
+        listPersonnage.add(personnageTest1);
+
+        Personnage personnageTest2 = new Personnage();
+        personnageTest1.setNom_personnage("test2");
+        personnageTest1.setDate_creation("0000-00-00");
+        personnageTest1.setNiveau(-1);
+        listPersonnage.add(personnageTest2);
+
+        armeTest.setPersonnages(listPersonnage);
+
+        armeService.save(armeTest);
+
+
+        List<Arme> armeList = armeService.findAll();
+        int dernierId = armeList.get(armeList.size() - 1).getId_arme();
+        Arme findarme = armeService.findById(dernierId);
+
+        List<Personnage> personnageList = personnageService.findAll();
+        Personnage personnage1 = personnageList.get(personnageList.size() - 2);
+        Personnage personnage2 = personnageList.get(personnageList.size() - 1);
+
+
+        assertNotEquals(personnageTest1,personnage1);
+        assertNotEquals(personnageTest2,personnage2);
+        assertEquals(armeTest,findarme);
+
+
+        armeService.delete(dernierId);
     }
 
     @Test

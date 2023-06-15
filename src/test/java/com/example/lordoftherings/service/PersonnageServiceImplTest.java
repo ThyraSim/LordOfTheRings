@@ -47,7 +47,31 @@ class PersonnageServiceImplTest {
     }
 
     @Test
-    void testDelete() {
+    void testDeleteExist() {
+        Personnage personnage = new Personnage();
+
+        personnageService.save(personnage);
+        List<Personnage> personnageList = personnageService.findAll();
+        int dernierId = personnageList.get(personnageList.size() - 1).getId_personnage();
+
+        personnageService.delete(dernierId);
+
+        assertThrows(RuntimeException.class,
+                () -> personnageService.findById(dernierId),
+                "Le personnage non trouvé -" + dernierId);
+    }
+
+    @Test
+    void testDeleteNotExist() {
+        int idNotExist = 0;
+
+        int sizeBefore = personnageService.findAll().size();
+
+        personnageService.delete(idNotExist);
+
+        int sizeAfter = personnageService.findAll().size();
+
+        assertEquals(sizeBefore, sizeAfter);
     }
 
     @Test
@@ -81,9 +105,26 @@ class PersonnageServiceImplTest {
                 "Le personnage non trouvé -" + idNotExist);
     }
 
+
     @Test
-    void testSave() {
+    void testSavePersonnageOnly() {
+        Personnage personnageTest = new Personnage();
+        personnageTest.setNom_personnage("TestPersonnage");
+        personnageTest.setDate_creation("2023-06-15");
+        personnageTest.setNiveau(1);
+
+        personnageService.save(personnageTest);
+
+        List<Personnage> personnageList = personnageService.findAll();
+        int dernierId = personnageList.get(personnageList.size() - 1).getId_personnage();
+        Personnage findPersonnage = personnageService.findById(dernierId);
+        assertEquals(personnageTest, findPersonnage);
+
+        personnageService.delete(dernierId);
     }
+
+
+
 
     @Test
     void testFindByIdWithArmeAndClassesAndCompte() {

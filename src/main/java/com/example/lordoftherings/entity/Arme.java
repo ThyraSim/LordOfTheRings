@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Arme {
@@ -100,5 +101,18 @@ public class Arme {
                 ", precission=" + precission +
                 ", type_stat='" + type_stat + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Arme arme = (Arme) o;
+        return Double.compare(arme.dommage, dommage) == 0 && Double.compare(arme.portee, portee) == 0 && precission == arme.precission && Objects.equals(id_arme, arme.id_arme) && Objects.equals(nom_arme, arme.nom_arme) && Objects.equals(type_stat, arme.type_stat);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_arme, nom_arme, dommage, portee, precission, type_stat);
     }
 }

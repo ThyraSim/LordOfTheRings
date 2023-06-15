@@ -98,7 +98,21 @@ class CompteServiceImplTest {
     }
 
     @Test
-    void testSave() {
+    void testSaveCompteOnly() {
+        Compte compteTest = new Compte();
+        compteTest.setNom_utilisateur("testuser");
+        compteTest.setMotDePasse("password");
+        compteTest.setDate_creation("2023-06-15");
+        compteTest.setPremium(true);
+
+        compteService.save(compteTest);
+
+        List<Compte> compteList = compteService.findAll();
+        int dernierId = compteList.get(compteList.size() - 1).getId_compte();
+        Compte findCompte = compteService.findById(dernierId);
+        assertEquals(compteTest, findCompte);
+
+        compteService.delete(dernierId);
     }
 
     @Test

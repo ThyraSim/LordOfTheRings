@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Classes {
@@ -110,5 +111,18 @@ public class Classes {
                 ", constitution=" + constitution +
                 ", intelligence=" + intelligence +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Classes classes = (Classes) o;
+        return puissance == classes.puissance && agilete == classes.agilete && constitution == classes.constitution && intelligence == classes.intelligence && Objects.equals(id_classe, classes.id_classe) && Objects.equals(nom_classe, classes.nom_classe) && Objects.equals(image, classes.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_classe, nom_classe, puissance, agilete, constitution, intelligence, image);
     }
 }

@@ -5,6 +5,8 @@ import com.example.lordoftherings.service.ArmeServiceImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 public class Personnage {
 
@@ -109,5 +111,18 @@ public class Personnage {
 
     public void setClasse(Classes classe) {
         this.classe = classe;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Personnage that = (Personnage) o;
+        return Objects.equals(id_personnage, that.id_personnage) && Objects.equals(nom_personnage, that.nom_personnage) && Objects.equals(date_creation, that.date_creation) && Objects.equals(niveau, that.niveau);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_personnage, nom_personnage, date_creation, niveau);
     }
 }

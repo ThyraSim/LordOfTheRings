@@ -102,7 +102,24 @@ class ClassesServiceImplTest {
     }
 
     @Test
-    void testSave() {
+    void testSaveClassesOnly() {
+        Classes classesTest = new Classes();
+        classesTest.setNom_classe("classeTest");
+        classesTest.setPuissance(0);
+        classesTest.setAgilete(0);
+        classesTest.setConstitution(0);
+        classesTest.setIntelligence(0);
+
+        classesService.save(classesTest);
+
+
+        List<Classes> classesList = classesService.findAll();
+        int dernierId = classesList.get(classesList.size() - 1).getId_classe();
+        Classes findClasses = classesService.findById(dernierId);
+        assertEquals(classesTest, findClasses);
+
+
+        classesService.delete(dernierId);
     }
 
     @Test
