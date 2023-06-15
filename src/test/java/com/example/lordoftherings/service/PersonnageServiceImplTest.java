@@ -4,6 +4,7 @@ import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.entity.Personnage;
+import com.example.lordoftherings.repository.PersonnageRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,18 @@ class PersonnageServiceImplTest {
 
     @Autowired
     private PersonnageService personnageService;
+
+    @Autowired
+    private ArmeService armeService;
+
+    @Autowired
+    private CompteService compteService;
+
+    @Autowired
+    private ClassesService classesService;
+
+    @Autowired
+    private PersonnageRepository personnageRepository;
 
     @Test
     void testFindAll() {
@@ -123,10 +136,138 @@ class PersonnageServiceImplTest {
         personnageService.delete(dernierId);
     }
 
+    @Test
+    void testSavePersonnageWithCompteNoCascade() {
+        // Pas cascade pour Compte
 
+        Compte compteTest = new Compte();
+        compteTest.setNom_utilisateur("TestUser");
+        compteTest.setMotDePasse("password");
+        compteTest.setDate_creation("0000-00-00");
+        compteTest.setPremium(true);
+
+        Personnage personnageTest = new Personnage();
+        personnageTest.setNom_personnage("test1");
+        personnageTest.setDate_creation("0000-00-00");
+        personnageTest.setNiveau(-1);
+        personnageTest.setCompte(compteTest);
+
+        personnageService.save(personnageTest);
+
+        List<Compte> compteList = compteService.findAll();
+        int dernierId = compteList.get(compteList.size() - 1).getId_compte();
+        Compte findCompte = compteService.findById(dernierId);
+
+        List<Personnage> personnageList = personnageService.findAll();
+        Personnage savedPersonnage = personnageList.get(personnageList.size() - 1);
+
+        assertEquals(personnageTest, savedPersonnage);
+        assertNotEquals(compteTest, findCompte);
+
+        compteService.delete(dernierId);
+        personnageRepository.delete(savedPersonnage);
+    }
+
+    @Test
+    void testSavePersonnageWithClassesNoCascade() {
+        // Pas cascade pour Classes
+
+        Classes classesTest = new Classes();
+        classesTest.setNom_classe("classesTest");
+
+        Personnage personnageTest = new Personnage();
+        personnageTest.setNom_personnage("test1");
+        personnageTest.setDate_creation("0000-00-00");
+        personnageTest.setNiveau(-1);
+        personnageTest.setClasse(classesTest);
+
+        personnageService.save(personnageTest);
+
+        List<Classes> classesList = classesService.findAll();
+        int dernierId = classesList.get(classesList.size() - 1).getId_classe();
+        Classes findClasses = classesService.findById(dernierId);
+
+        List<Personnage> personnageList = personnageService.findAll();
+        Personnage savedPersonnage = personnageList.get(personnageList.size() - 1);
+
+        assertEquals(personnageTest, savedPersonnage);
+        assertNotEquals(classesTest, findClasses);
+
+        classesService.delete(dernierId);
+        personnageRepository.delete(savedPersonnage);
+    }
+
+    @Test
+    void testSavePersonnageWithArmeNoCascade() {
+        // Pas cascade pour arme
+
+        Arme armeTest = new Arme();
+        armeTest.setNom_arme("ArmeTest");
+
+        Personnage personnageTest = new Personnage();
+        personnageTest.setNom_personnage("test1");
+        personnageTest.setDate_creation("0000-00-00");
+        personnageTest.setNiveau(-1);
+        personnageTest.setArme(armeTest);
+
+        personnageService.save(personnageTest);
+
+        List<Arme> armeList = armeService.findAll();
+        int dernierId = armeList.get(armeList.size() - 1).getId_arme();
+        Arme findArme = armeService.findById(dernierId);
+
+        List<Personnage> personnageList = personnageService.findAll();
+        Personnage savedPersonnage = personnageList.get(personnageList.size() - 1);
+
+        assertEquals(personnageTest, savedPersonnage);
+        assertNotEquals(armeTest, findArme);
+
+
+        armeService.delete(dernierId);
+
+
+    }
 
 
     @Test
     void testFindByIdWithArmeAndClassesAndCompte() {
+        // Créer des données de test
+        Compte compte = new Compte();
+        compte.setNom_utilisateur("TestUser");
+        compte.setMotDePasse("password");
+        compte.setDate_creation("0000-00-00");
+        compte.setPremium(true);
+        compteService.save(compte);
+
+        Arme arme = new Arme();
+        arme.setNom_arme("ArmeTest");
+        armeService.save(arme);
+
+        Classes classe = new Classes();
+        classe.setNom_classe("ClassesTest");
+        classesService.save(classe);
+
+        Personnage personnage = new Personnage();
+        personnage.setNom_personnage("test1");
+        personnage.setDate_creation("0000-00-00");
+        personnage.setNiveau(-1);
+        personnage.setCompte(compte);
+        personnage.setArme(arme);
+        personnage.setClasse(classe);
+        personnageService.save(personnage);
+
+        List<Personnage> personnageList = personnageService.findAll();
+        Personnage personnageTrouve = personnageList.get(personnageList.size() - 1);
+
+
+        // Effectuer les test
+        assertNotNull(personnageTrouve);
+     assertEquals(personnage,personnageTrouve);
+
+        // Nettoyer les données de test
+        personnageService.delete(personnage.getId_personnage());
+        compteService.delete(compte.getId_compte());
+        armeService.delete(arme.getId_arme());
+        classesService.delete(classe.getId_classe());
     }
 }

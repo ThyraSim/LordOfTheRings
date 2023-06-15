@@ -2,10 +2,14 @@ package com.example.lordoftherings.service;
 
 import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Compte;
+import com.example.lordoftherings.entity.Personnage;
+import com.example.lordoftherings.repository.CompteRepository;
+import com.example.lordoftherings.repository.PersonnageRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,6 +19,14 @@ class CompteServiceImplTest {
 
     @Autowired
     private CompteService compteService;
+
+    @Autowired
+    private
+    PersonnageService personnageService;
+
+    @Autowired
+    PersonnageRepository personnageRepository;
+
     @Test
     void testFindAll() {
         Compte compte1 = new Compte();
@@ -113,6 +125,55 @@ class CompteServiceImplTest {
         assertEquals(compteTest, findCompte);
 
         compteService.delete(dernierId);
+    }
+
+    @Test
+    void testSaveCompteWithPersonnageCascade() {
+        // Avec cascade pour personnage
+
+        // Créer des données de test
+        Compte compteTest = new Compte();
+        compteTest.setNom_utilisateur("TestUser");
+        compteTest.setMotDePasse("password");
+        compteTest.setDate_creation("0000-00-00");
+        compteTest.setPremium(true);
+
+        List<Personnage> listPersonnage = new ArrayList<>();
+
+        Personnage personnageTest1 = new Personnage();
+        personnageTest1.setNom_personnage("test1");
+        personnageTest1.setDate_creation("0000-00-00");
+        personnageTest1.setNiveau(-1);
+        personnageTest1.setCompte(compteTest);
+        listPersonnage.add(personnageTest1);
+
+
+
+        compteTest.setPersonnages(listPersonnage);
+
+        compteService.save(compteTest);
+
+        List<Compte> compteList = compteService.findAll();
+        int dernierId = compteList.get(compteList.size() - 1).getId_compte();
+        Compte findCompte = compteService.findById(dernierId);
+
+        List<Personnage> personnageList = personnageService.findAll();
+        Personnage personnage1 = personnageList.get(personnageList.size() - 1);
+
+
+
+        assertEquals(personnageTest1,personnage1);
+
+
+        assertEquals(compteTest, findCompte);
+
+
+        compteService.delete(dernierId);
+        personnageRepository.delete(personnage1);
+
+
+
+
     }
 
     @Test

@@ -2,12 +2,14 @@ package com.example.lordoftherings.service;
 
 import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.entity.Classes;
+import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.repository.ArmeRepository;
 import com.example.lordoftherings.repository.ClassesRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +21,7 @@ class ClassesServiceImplTest {
     private ClassesService classesService;
 
     @Autowired
-    private ClassesRepository classesRepository;
+    private PersonnageService personnageService;
 
     @Test
     void testFindAll() {
@@ -118,6 +120,50 @@ class ClassesServiceImplTest {
         Classes findClasses = classesService.findById(dernierId);
         assertEquals(classesTest, findClasses);
 
+
+        classesService.delete(dernierId);
+    }
+
+    @Test
+    void testSaveClassesWithPersonnageNoCascade() {
+        // Pas de cascade donc pas de persistance
+
+        Classes classesTest = new Classes();
+        classesTest.setNom_classe("ClasseTest");
+        classesTest.setPuissance(0);
+        classesTest.setAgilete(0);
+        classesTest.setConstitution(0);
+        classesTest.setIntelligence(0);
+
+        List<Personnage> listPersonnage = new ArrayList<>();
+
+        Personnage personnageTest1 = new Personnage();
+        personnageTest1.setNom_personnage("test1");
+        personnageTest1.setDate_creation("0000-00-00");
+        personnageTest1.setNiveau(-1);
+        listPersonnage.add(personnageTest1);
+
+        Personnage personnageTest2 = new Personnage();
+        personnageTest2.setNom_personnage("test2");
+        personnageTest2.setDate_creation("0000-00-00");
+        personnageTest2.setNiveau(-1);
+        listPersonnage.add(personnageTest2);
+
+        classesTest.setPersonnages(listPersonnage);
+
+        classesService.save(classesTest);
+
+        List<Classes> classesList = classesService.findAll();
+        int dernierId = classesList.get(classesList.size() - 1).getId_classe();
+        Classes findClasses = classesService.findById(dernierId);
+
+        List<Personnage> personnageList = personnageService.findAll();
+        Personnage personnage1 = personnageList.get(personnageList.size() - 2);
+        Personnage personnage2 = personnageList.get(personnageList.size() - 1);
+
+        assertNotEquals(personnageTest1, personnage1);
+        assertNotEquals(personnageTest2, personnage2);
+        assertEquals(classesTest, findClasses);
 
         classesService.delete(dernierId);
     }
