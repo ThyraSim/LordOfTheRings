@@ -43,7 +43,7 @@ import java.util.List;
             return "Arme supprimée : " + armeId;
         }
 
-        @PostMapping("/JSON/armes")
+        @PostMapping("/JSON/armes/add")
         public Arme addArme(@RequestBody Arme arme){
             return this.armeService.save(arme);
         }
