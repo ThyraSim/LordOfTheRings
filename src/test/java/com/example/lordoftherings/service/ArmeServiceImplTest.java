@@ -1,8 +1,10 @@
 package com.example.lordoftherings.service;
 
 import com.example.lordoftherings.entity.Arme;
+import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.repository.ArmeRepository;
+import com.example.lordoftherings.repository.ClassesRepository;
 import com.example.lordoftherings.repository.PersonnageRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ class ArmeServiceImplTest {
 
     @Autowired
     private PersonnageRepository personnageRepository;
+
+    @Autowired
+    private ClassesRepository classesRepository;
 
 
     @Test
@@ -303,5 +308,64 @@ class ArmeServiceImplTest {
 
     @Test
     void testFindArmesByClasse() {
+
+        //création instance pour le test
+        Classes classeTest = new Classes();
+        classeTest.setNom_classe("classeTest");
+        classesRepository.save(classeTest);
+
+        Arme armeUseByClasseTest = new Arme();
+        armeRepository.save(armeUseByClasseTest);
+        Arme armeNotUseByClasseTest = new Arme();
+        armeRepository.save(armeNotUseByClasseTest);
+        Arme armeNotUsedAtAll = new Arme();
+        armeRepository.save(armeNotUsedAtAll);
+
+
+        Personnage personnageWithClasseTest = new Personnage();
+        Personnage personnageWithoutClasseTest = new Personnage();
+
+        personnageWithClasseTest.setClasse(classeTest);
+        personnageWithoutClasseTest.setClasse(null);
+
+        personnageWithClasseTest.setArme(armeUseByClasseTest);
+        personnageWithoutClasseTest.setArme(armeNotUseByClasseTest);
+
+        personnageRepository.save(personnageWithClasseTest);
+        personnageRepository.save(personnageWithoutClasseTest);
+
+
+       List<Arme> listeArmeUsedByClasseUsingArme = armeService.findArmesByClasse("classeTest");
+
+       Boolean armeUseByClasseTestFound = false;
+        Boolean armeNotUseByClasseTestFound = false;
+        Boolean armeNotUsedAtAllFound = false;
+
+        for (Arme arme:
+             listeArmeUsedByClasseUsingArme) {
+            if (arme.equals(armeUseByClasseTest)) {
+                armeUseByClasseTestFound = true;
+            }
+            if (arme.equals(armeNotUseByClasseTest)) {
+                armeNotUseByClasseTestFound = true;
+            }
+            if (arme.equals(armeNotUsedAtAll)) {
+                armeNotUsedAtAllFound = true;
+            }
+
+        }
+
+        assertEquals(true,armeUseByClasseTestFound);
+        assertEquals(false,armeNotUseByClasseTestFound);
+        assertEquals(false,armeNotUsedAtAllFound);
+
+        personnageRepository.delete(personnageWithClasseTest);
+        personnageRepository.delete(personnageWithoutClasseTest);
+        classesRepository.delete(classeTest);
+        armeRepository.delete(armeUseByClasseTest);
+        armeRepository.delete(armeNotUseByClasseTest);
+        armeRepository.delete(armeNotUsedAtAll);
+
+
     }
 }

@@ -148,7 +148,6 @@ class CompteServiceImplTest {
         listPersonnage.add(personnageTest1);
 
 
-
         compteTest.setPersonnages(listPersonnage);
 
         compteService.save(compteTest);
@@ -161,8 +160,7 @@ class CompteServiceImplTest {
         Personnage personnage1 = personnageList.get(personnageList.size() - 1);
 
 
-
-        assertEquals(personnageTest1,personnage1);
+        assertEquals(personnageTest1, personnage1);
 
 
         assertEquals(compteTest, findCompte);
@@ -172,11 +170,50 @@ class CompteServiceImplTest {
         personnageRepository.delete(personnage1);
 
 
-
-
     }
 
     @Test
-    void testFindCompteWithPersonnagesById() {
+    void testFindCompteWithPersonnagesByIdExistingId() {
+        // Create test data
+        Compte compte = new Compte();
+        compte.setNom_utilisateur("TestUser");
+        compte.setMotDePasse("password");
+        compte.setDate_creation("0000-00-00");
+        compte.setPremium(true);
+        compteService.save(compte);
+
+        Personnage personnage1 = new Personnage();
+        personnage1.setNom_personnage("test1");
+        personnage1.setDate_creation("0000-00-00");
+        personnage1.setNiveau(-1);
+        personnage1.setCompte(compte);
+        personnageService.save(personnage1);
+
+        Personnage personnage2 = new Personnage();
+        personnage2.setNom_personnage("test2");
+        personnage2.setDate_creation("0000-00-00");
+        personnage2.setNiveau(1);
+        personnage2.setCompte(compte);
+        personnageService.save(personnage2);
+
+
+        Compte foundCompte = compteService.findCompteWithPersonnagesById(compte.getId_compte());
+        assertNotNull(foundCompte);
+        assertEquals(compte, foundCompte);
+        assertEquals(2, foundCompte.getPersonnages().size());
+
+
+        personnageService.delete(personnage1.getId_personnage());
+        personnageService.delete(personnage2.getId_personnage());
+        compteService.delete(compte.getId_compte());
+    }
+
+
+    @Test
+    void testFindCompteWithPersonnagesById_NonExistingId() {
+
+        Integer nonExistingId = 0;
+        Compte nonExistingCompte = compteService.findCompteWithPersonnagesById(nonExistingId);
+        assertNull(nonExistingCompte);
     }
 }

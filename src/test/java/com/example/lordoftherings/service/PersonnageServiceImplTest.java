@@ -4,10 +4,12 @@ import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.entity.Personnage;
+import com.example.lordoftherings.repository.ArmeRepository;
 import com.example.lordoftherings.repository.PersonnageRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 import java.util.List;
 
@@ -21,6 +23,9 @@ class PersonnageServiceImplTest {
 
     @Autowired
     private ArmeService armeService;
+
+    @Autowired
+    private ArmeRepository armeRepository;
 
     @Autowired
     private CompteService compteService;
@@ -152,53 +157,44 @@ class PersonnageServiceImplTest {
         personnageTest.setNiveau(-1);
         personnageTest.setCompte(compteTest);
 
-        personnageService.save(personnageTest);
+        // Expect the InvalidDataAccessApiUsageException and assert on the exception message
+        InvalidDataAccessApiUsageException exception = assertThrows(InvalidDataAccessApiUsageException.class, () -> {
+            personnageService.save(personnageTest);
+        });
+        String expectedMessage = "org.hibernate.TransientPropertyValueException: object references an unsaved transient instance";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
 
-        List<Compte> compteList = compteService.findAll();
-        int dernierId = compteList.get(compteList.size() - 1).getId_compte();
-        Compte findCompte = compteService.findById(dernierId);
 
-        List<Personnage> personnageList = personnageService.findAll();
-        Personnage savedPersonnage = personnageList.get(personnageList.size() - 1);
-
-        assertEquals(personnageTest, savedPersonnage);
-        assertNotEquals(compteTest, findCompte);
-
-        compteService.delete(dernierId);
-        personnageRepository.delete(savedPersonnage);
+        personnageRepository.delete(personnageTest);
     }
 
     @Test
-    void testSavePersonnageWithClassesNoCascade() {
-        // Pas cascade pour Classes
-
-        Classes classesTest = new Classes();
-        classesTest.setNom_classe("classesTest");
-
+    public void testNoCascadeOnClasses() {
+        // Create a new instance of Personnage
         Personnage personnageTest = new Personnage();
         personnageTest.setNom_personnage("test1");
         personnageTest.setDate_creation("0000-00-00");
         personnageTest.setNiveau(-1);
-        personnageTest.setClasse(classesTest);
 
-        personnageService.save(personnageTest);
+        // Set an unsaved instance of Classes
+        Classes unsavedClasses = new Classes();
+        unsavedClasses.setNom_classe("unsavedClasses");
+        personnageTest.setClasse(unsavedClasses);
 
-        List<Classes> classesList = classesService.findAll();
-        int dernierId = classesList.get(classesList.size() - 1).getId_classe();
-        Classes findClasses = classesService.findById(dernierId);
-
-        List<Personnage> personnageList = personnageService.findAll();
-        Personnage savedPersonnage = personnageList.get(personnageList.size() - 1);
-
-        assertEquals(personnageTest, savedPersonnage);
-        assertNotEquals(classesTest, findClasses);
-
-        classesService.delete(dernierId);
-        personnageRepository.delete(savedPersonnage);
+        // Expect the InvalidDataAccessApiUsageException and assert on the exception message
+        InvalidDataAccessApiUsageException exception = assertThrows(InvalidDataAccessApiUsageException.class, () -> {
+            personnageService.save(personnageTest);
+        });
+        String expectedMessage = "org.hibernate.TransientPropertyValueException: object references an unsaved transient instance";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
     void testSavePersonnageWithArmeNoCascade() {
+        // Pas cascade pour arme
+
         // Pas cascade pour arme
 
         Arme armeTest = new Arme();
@@ -210,27 +206,23 @@ class PersonnageServiceImplTest {
         personnageTest.setNiveau(-1);
         personnageTest.setArme(armeTest);
 
-        personnageService.save(personnageTest);
-
-        List<Arme> armeList = armeService.findAll();
-        int dernierId = armeList.get(armeList.size() - 1).getId_arme();
-        Arme findArme = armeService.findById(dernierId);
-
-        List<Personnage> personnageList = personnageService.findAll();
-        Personnage savedPersonnage = personnageList.get(personnageList.size() - 1);
-
-        assertEquals(personnageTest, savedPersonnage);
-        assertNotEquals(armeTest, findArme);
+        // Expect the InvalidDataAccessApiUsageException and assert on the exception message
+        InvalidDataAccessApiUsageException exception = assertThrows(InvalidDataAccessApiUsageException.class, () -> {
+            personnageService.save(personnageTest);
+        });
+        String expectedMessage = "org.hibernate.TransientPropertyValueException: object references an unsaved transient instance";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
 
 
-        armeService.delete(dernierId);
+        personnageRepository.delete(personnageTest);
 
 
     }
 
 
     @Test
-    void testFindByIdWithArmeAndClassesAndCompte() {
+    void testFindByIdWithArmeAndClassesAndCompteExistingId() {
         // Créer des données de test
         Compte compte = new Compte();
         compte.setNom_utilisateur("TestUser");
@@ -270,4 +262,14 @@ class PersonnageServiceImplTest {
         armeService.delete(arme.getId_arme());
         classesService.delete(classe.getId_classe());
     }
+    @Test
+    void testFindByIdWithArmeAndClassesAndCompte_NonExistingId() {
+
+        Integer nonExistingId = 0;
+        Personnage nonExistingPersonnage = personnageService.findByIdWithArmeAndClassesAndCompte(nonExistingId);
+        assertNull(nonExistingPersonnage);
+    }
+
+
+
 }
