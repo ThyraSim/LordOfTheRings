@@ -8,15 +8,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UtilitaireTest {
 
-    @BeforeEach
-    void setUp() {
-    }
 
-    @AfterEach
-    void tearDown() {
-    }
 
     @Test
-    void testGetFileExtension() {
+    void testGetFileExtensionExist() {
+        String filename =  "classeName.jpg";
+        String classeName = "classeName";
+
+        assertEquals("jpg",Utilitaire.getFileExtension(filename));
+
+    }
+    @Test
+    void testGetFileExtensionNotExist() {
+        String filename =  "classeName";
+        String classeName = "classeName";
+
+        assertEquals("",Utilitaire.getFileExtension(filename));
+
     }
 }
