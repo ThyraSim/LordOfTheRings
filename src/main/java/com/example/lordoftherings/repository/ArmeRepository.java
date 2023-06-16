@@ -32,8 +32,14 @@ public interface ArmeRepository extends JpaRepository<Arme, Integer> {
     List<Arme> findArmesByClasse( String classe);
 
 
+    /**
+     * Recherche et renvoie une liste d'armes en fonction du type de statistique spécifié.
+     *
+     * @param typeStat Le type de statistique des armes à rechercher.
+     * @return Une liste d'armes correspondant au type de statistique spécifié.
+     */
     @Query("SELECT a FROM Arme a WHERE a.type_stat = :typeStat")
-    List<Arme> findByTypeStat(@Param("typeStat") String typeStat);
+    List<Arme> findByTypeStat(String typeStat);
 
 
 

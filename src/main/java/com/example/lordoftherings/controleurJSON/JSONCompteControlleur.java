@@ -41,7 +41,7 @@ import java.util.List;
             return  "Compte supprimé : " + compteId;
         }
 
-        @PostMapping("/JSON/comptes")
+        @PostMapping("/JSON/comptes/add")
         public Compte addCompte(@RequestBody Compte compte){
 
             return this.compteService.save(compte);
@@ -73,8 +73,15 @@ import java.util.List;
 
         }
         @GetMapping("/JSON/Recherche/compte/nomUtilisateur/{saisi}")
-        public List<Compte> rechercheNomUtilisateurContenant(@PathVariable String saisi){
-            return compteService.rechercheNomUtilisateurContenant(saisi);
+        public List<Compte> rechercheNomUtilisateurContenant(@PathVariable String saisi) {
+            List<Compte> comptes = compteService.rechercheNomUtilisateurContenant(saisi);
+
+
+            for (Compte compte : comptes) {
+                compte.setPersonnages(null);
+            }
+
+            return comptes;
         }
     }
 
