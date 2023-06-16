@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * Classe représentant un personnage dans le jeu Seigneur des Anneaux.
+ */
 @Entity
 public class Personnage {
 
@@ -33,6 +36,17 @@ public class Personnage {
 
     public Personnage() {
     }
+
+    /**
+     * Crée un nouveau personnage avec les informations spécifiées.
+     *
+     * @param nom_personnage Le nom du personnage.
+     * @param date_creation La date de création du personnage.
+     * @param niveau Le niveau du personnage.
+     * @param compte Le compte associé au personnage.
+     * @param arme L'arme équipée par le personnage.
+     * @param classe La classe du personnage.
+     */
 
     public Personnage(String nom_personnage, String date_creation, Integer niveau, Compte compte, Arme arme, Classes classe) {
 

@@ -138,7 +138,7 @@ class ArmeServiceImplTest {
         int dernierId = armeList.get(armeList.size() - 1).getId_arme();
         Arme findarme = armeService.findById(dernierId);
 
-        assertEquals(armeTest,findarme);
+        assertEquals(armeTest, findarme);
 
 
         armeService.delete(dernierId);
@@ -182,9 +182,9 @@ class ArmeServiceImplTest {
         Personnage personnage2 = personnageList.get(personnageList.size() - 1);
 
 
-        assertNotEquals(personnageTest1,personnage1);
-        assertNotEquals(personnageTest2,personnage2);
-        assertEquals(armeTest,findarme);
+        assertNotEquals(personnageTest1, personnage1);
+        assertNotEquals(personnageTest2, personnage2);
+        assertEquals(armeTest, findarme);
 
 
         armeService.delete(dernierId);
@@ -211,7 +211,7 @@ class ArmeServiceImplTest {
 
 
         //test
-        assertEquals (true,
+        assertEquals(true,
                 armeService.isArmeInUse(armeUsedByPersonageID));
 
 
@@ -233,11 +233,11 @@ class ArmeServiceImplTest {
         int armeUsedByPersonageID = listAllArme.get(listAllArme.size() - 1).getId_arme();
 
         //test
-        assertEquals (false,
+        assertEquals(false,
                 armeService.isArmeInUse(armeUsedByPersonageID));
 
         //nettoyage
-               armeRepository.delete(armeNotUsed);
+        armeRepository.delete(armeNotUsed);
     }
 
     @Test
@@ -288,12 +288,12 @@ class ArmeServiceImplTest {
             }
         }
 
-        assertEquals(false,armeDmg9Trouve);
-        assertEquals(true,armeDmg10Trouve);
-        assertEquals(true,armeDmg11Trouve);
-        assertEquals(true,armeDmg19Trouve);
-        assertEquals(true,armeDmg20Trouve);
-        assertEquals(false,armeDmg21Trouve);
+        assertEquals(false, armeDmg9Trouve);
+        assertEquals(true, armeDmg10Trouve);
+        assertEquals(true, armeDmg11Trouve);
+        assertEquals(true, armeDmg19Trouve);
+        assertEquals(true, armeDmg20Trouve);
+        assertEquals(false, armeDmg21Trouve);
 
         //Nettoyage
 
@@ -335,14 +335,14 @@ class ArmeServiceImplTest {
         personnageRepository.save(personnageWithoutClasseTest);
 
 
-       List<Arme> listeArmeUsedByClasseUsingArme = armeService.findArmesByClasse("classeTest");
+        List<Arme> listeArmeUsedByClasseUsingArme = armeService.findArmesByClasse("classeTest");
 
-       Boolean armeUseByClasseTestFound = false;
+        Boolean armeUseByClasseTestFound = false;
         Boolean armeNotUseByClasseTestFound = false;
         Boolean armeNotUsedAtAllFound = false;
 
-        for (Arme arme:
-             listeArmeUsedByClasseUsingArme) {
+        for (Arme arme :
+                listeArmeUsedByClasseUsingArme) {
             if (arme.equals(armeUseByClasseTest)) {
                 armeUseByClasseTestFound = true;
             }
@@ -355,9 +355,9 @@ class ArmeServiceImplTest {
 
         }
 
-        assertEquals(true,armeUseByClasseTestFound);
-        assertEquals(false,armeNotUseByClasseTestFound);
-        assertEquals(false,armeNotUsedAtAllFound);
+        assertEquals(true, armeUseByClasseTestFound);
+        assertEquals(false, armeNotUseByClasseTestFound);
+        assertEquals(false, armeNotUsedAtAllFound);
 
         personnageRepository.delete(personnageWithClasseTest);
         personnageRepository.delete(personnageWithoutClasseTest);
@@ -368,4 +368,39 @@ class ArmeServiceImplTest {
 
 
     }
+
+
+    @Test
+    public void testRechercheArmeTypeStatExist() {
+        // creation arme
+        Arme arme = new Arme("Épée", 10.0, 2.0, 80, "testStr");
+        armeRepository.save(arme);
+
+        // test
+        List<Arme> result = armeService.rechercheArmeTypeStat("testStr");
+
+
+        assertEquals(1, result.size());
+        assertEquals(arme, result.get(0));
+
+        //clean up
+        armeRepository.delete(arme);
+    }
+
+    @Test
+    public void testRechercheArmeTypeStatNotExist() {
+        // Création d'une arme d'exemple
+        Arme arme = new Arme("Épée", 10.0, 2.0, 80, "str");
+        armeRepository.save(arme);
+
+        // Exécution du test pour un type d'arme inexistant
+        List<Arme> resultat = armeService.rechercheArmeTypeStat("testStr");
+
+        // Vérification du résultat
+        assertEquals(0, resultat.size());
+
+        // Nettoyage
+        armeRepository.delete(arme);
+    }
 }
+

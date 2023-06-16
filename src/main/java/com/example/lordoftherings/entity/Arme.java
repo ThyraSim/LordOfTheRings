@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Classe représentant une arme dans le jeu "Seigneur des Anneaux".
+ */
 @Entity
 public class Arme {
 
@@ -15,19 +18,27 @@ public class Arme {
     private Integer id_arme;
     private String nom_arme;
     private double dommage;
-    private double portee; //en mètres
-    private int precission; //sur 100
-    private String type_stat;//str, agi, int
+    private double portee; // en mètres
+    private int precission; // sur 100
+    private String type_stat; // str, agi, int
 
     @JsonIgnore
-    @OneToMany(mappedBy = "arme",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "arme", fetch = FetchType.EAGER)
     private List<Personnage> personnages = new ArrayList<>();
 
     public Arme() {
     }
 
-    public Arme( String nom_arme, double dommage, double portee, int precission, String type_stat) {
-
+    /**
+     * Constructeur de la classe Arme.
+     *
+     * @param nom_arme    le nom de l'arme
+     * @param dommage     les points de dommage de l'arme
+     * @param portee      la portée de l'arme en mètres
+     * @param precission  la précision de l'arme sur 100
+     * @param type_stat   le type de statistique de l'arme (str, agi, int)
+     */
+    public Arme(String nom_arme, double dommage, double portee, int precission, String type_stat) {
         this.nom_arme = nom_arme;
         this.dommage = dommage;
         this.portee = portee;

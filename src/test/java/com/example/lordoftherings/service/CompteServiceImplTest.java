@@ -21,6 +21,9 @@ class CompteServiceImplTest {
     private CompteService compteService;
 
     @Autowired
+    private CompteRepository compteRepository;
+
+    @Autowired
     private
     PersonnageService personnageService;
 
@@ -216,4 +219,64 @@ class CompteServiceImplTest {
         Compte nonExistingCompte = compteService.findCompteWithPersonnagesById(nonExistingId);
         assertNull(nonExistingCompte);
     }
+
+
+    @Test
+    void rechercheComptePremium() {
+        // Création de comptes premium d'exemple
+        Compte compte1 = new Compte("John", "Doe", "2023-06-16", true);
+        compteRepository.save(compte1);
+
+        Compte compte2 = new Compte("Jane", "Smith", "2023-06-16", false);
+        compteRepository.save(compte2);
+
+        // Exécution du test
+        List<Compte> result = compteService.rechercheComptePrenium();
+
+        // Vérification du résultat
+        boolean containsPremium = false;
+        for (Compte compte : result) {
+            if (compte.isPremium()) {
+                containsPremium = true;
+                break;
+            }
+        }
+
+        assertTrue(containsPremium);
+
+        compteRepository.delete(compte1);
+        compteRepository.delete(compte2);
+    }
+
+
+
+    @Test
+    void rechercheNomUtilisateurContenant() {
+        // Création de comptes d'exemple
+        Compte compte1 = new Compte("abc", "motDePasse1", "2023-06-16", false);
+        compteRepository.save(compte1);
+
+        Compte compte2 = new Compte("def", "motDePasse2", "2023-06-16", false);
+        compteRepository.save(compte2);
+
+        Compte compte3 = new Compte("ghi", "motDePasse3", "2023-06-16", false);
+        compteRepository.save(compte3);
+
+        // Exécution du test
+        List<Compte> result = compteService.rechercheNomUtilisateurContenant("abc");
+
+        // Vérification du résultat
+        assertEquals(1, result.size());
+        assertEquals(compte1, result.get(0));
+
+
+        //nettoyage
+
+        compteRepository.delete(compte1);
+        compteRepository.delete(compte2);
+        compteRepository.delete(compte3);
+
+    }
+
+
 }

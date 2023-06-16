@@ -12,10 +12,16 @@ import java.util.List;
 
 @Repository
 public interface PersonnageRepository extends JpaRepository<Personnage, Integer> {
+
+    /**
+     * Trouve un personnage avec ses armes, classes et compte associé en fonction de l'id du personnage
+     * @param id
+     * @return Retour le personnage avec tous ces attribut associé
+     */
     @Query("SELECT p  FROM Personnage p JOIN FETCH p.arme a JOIN FETCH p.classe c JOIN FETCH p.compte u WHERE p.id_personnage = :id")
     Personnage findByIdWithArmeAndClassesAndCompte(@Param("id") Integer id);
 
-    //retrouver toutes les armes des personnages d'une classe spécifique
+
 
 
 }

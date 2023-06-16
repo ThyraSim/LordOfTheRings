@@ -41,7 +41,7 @@ import java.util.List;
             return  "Compte supprimé : " + compteId;
         }
 
-        @PostMapping("/JSON/comptes")
+        @PostMapping("/JSON/comptes/add")
         public Compte addCompte(@RequestBody Compte compte){
 
             return this.compteService.save(compte);
@@ -65,6 +65,23 @@ import java.util.List;
             compteService.save(oldCompte);
 
             return ResponseEntity.ok("Item modified successfully");
+        }
+
+        @GetMapping("/JSON/Recherche/comptesPrenium")
+        public List<Compte> recherComptePrenium(){
+            return compteService.rechercheComptePrenium();
+
+        }
+        @GetMapping("/JSON/Recherche/compte/nomUtilisateur/{saisi}")
+        public List<Compte> rechercheNomUtilisateurContenant(@PathVariable String saisi) {
+            List<Compte> comptes = compteService.rechercheNomUtilisateurContenant(saisi);
+
+
+            for (Compte compte : comptes) {
+                compte.setPersonnages(null);
+            }
+
+            return comptes;
         }
     }
 

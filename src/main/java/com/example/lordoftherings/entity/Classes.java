@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * Classe représentant une classe dans le jeu "Seigneur des Anneaux".
+ */
 @Entity
 public class Classes {
     @Id
@@ -25,6 +27,17 @@ public class Classes {
 
     public Classes(){
     }
+
+    /**
+     * Constructeur de la classe Classes.
+     *
+     * @param nom_classe    le nom de la classe
+     * @param puissance     la puissance de la classe
+     * @param agilete       l'agilité de la classe
+     * @param constitution  la constitution de la classe
+     * @param intelligence  l'intelligence de la classe
+     * @param image         l'image représentant la classe
+     */
 
     public Classes( String nom_classe, int puissance, int agilete, int constitution, int intelligence, String image) {
 

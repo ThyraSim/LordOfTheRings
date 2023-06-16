@@ -33,6 +33,7 @@ public class PersonnageControlleur {
         this.armeService = armeService;
     }
 
+    // Retourne la liste de tous les personnages
     @GetMapping("/personnages")
     public String findAll(Model model){
         List<Personnage> personnages = personnageService.findAll();
@@ -40,6 +41,7 @@ public class PersonnageControlleur {
         return "allPersonnages";
     }
 
+    // Supprime un personnage par son identifiant
     @PostMapping("/personnages/delete")
     public ResponseEntity<String> deletePersonnage(@RequestParam("personnageId") Integer personnageId){
 
@@ -50,6 +52,7 @@ public class PersonnageControlleur {
                 .build();
     }
 
+    // Redirige vers une page après la suppression d'un personnage
     @GetMapping("/personnages/redirectDelete")
     public String redirectDelete(Model model){
         model.addAttribute("type", "deleted");
@@ -57,12 +60,13 @@ public class PersonnageControlleur {
         return "success";
     }
 
+    // Ajoute un nouveau personnage
     @PostMapping("/personnages/add")
     public ResponseEntity<String> addPersonnage(@RequestParam("nom_personnage") String nom_personnage,
-                                            @RequestParam("niveau") Integer niveau,
-                                            @RequestParam("classeId") Integer classeId,
-                                            @RequestParam("armeId") Integer armeId,
-                                            @RequestParam("compteId") Integer compteId){
+                                                @RequestParam("niveau") Integer niveau,
+                                                @RequestParam("classeId") Integer classeId,
+                                                @RequestParam("armeId") Integer armeId,
+                                                @RequestParam("compteId") Integer compteId){
         Classes classe = classesService.findById(classeId);
         Arme arme = armeService.findById(armeId);
         Compte compte = compteService.findById(compteId);
@@ -83,6 +87,7 @@ public class PersonnageControlleur {
                 .build();
     }
 
+    // Redirige vers une page après l'ajout d'un personnage
     @GetMapping("/personnages/redirectAdd")
     public String redirectAdd(Model model){
         model.addAttribute("type", "added");
@@ -90,6 +95,7 @@ public class PersonnageControlleur {
         return "success";
     }
 
+    // Modifie un personnage existant
     @PostMapping("/personnages/edit")
     public ResponseEntity<String> modifyClasse(@RequestParam("nom_personnage") String nom_personnage,
                                                @RequestParam("niveau") Integer niveau,
@@ -104,14 +110,14 @@ public class PersonnageControlleur {
         Classes classe = classesService.findById(classeId);
         Arme arme = armeService.findById(armeId);
 
-        // Update the properties of the existing item with the new values
+        // Met à jour les propriétés de l'objet existant avec les nouvelles valeurs
         oldPersonnage.setNom_personnage(nom_personnage);
         oldPersonnage.setNiveau(niveau);
         oldPersonnage.setClasse(classe);
         oldPersonnage.setArme(arme);
-        // ... update other properties as needed
+        // ... mettre à jour les autres propriétés au besoin
 
-        // Save the modified item
+        // Enregistre l'objet modifié
         personnageService.save(oldPersonnage);
 
         return ResponseEntity.status(HttpStatus.FOUND)
@@ -119,6 +125,7 @@ public class PersonnageControlleur {
                 .build();
     }
 
+    // Redirige vers une page après la modification d'un personnage
     @GetMapping("/personnages/redirectEdit")
     public String redirectEdit(Model model){
         model.addAttribute("type", "edited");
@@ -126,6 +133,7 @@ public class PersonnageControlleur {
         return "success";
     }
 
+    // Affiche les détails d'un personnage spécifié par son identifiant
     @GetMapping("/personnages/{personnageId}")
     public String showPersonnage(@PathVariable Integer personnageId, Model model) {
         Personnage personnage = personnageService.findByIdWithArmeAndClassesAndCompte(personnageId);
@@ -134,11 +142,13 @@ public class PersonnageControlleur {
         return "personnageDetails";
     }
 
+    // Redirige vers les détails d'un personnage après avoir sélectionné un personnage
     @PostMapping("/personnagesChoice")
     public String choixPersonnage(@RequestParam("personnageId") String personnageId){
         return "redirect:/personnages/" + personnageId;
     }
 
+    // Redirige vers un formulaire pour ajouter un personnage
     @PostMapping("/personnages/addForm")
     public String redirectFormAddPersonnage(Model model,
                                             @RequestParam("compteId") Integer compteId){
@@ -150,6 +160,7 @@ public class PersonnageControlleur {
         return "addPersonnage";
     }
 
+    // Redirige vers un formulaire pour modifier un personnage
     @PostMapping("/personnagesChange")
     public String sendChangeForm(@RequestParam("personnageId") Integer personnageId, Model model){
         Personnage tempPersonnage = personnageService.findById(personnageId);

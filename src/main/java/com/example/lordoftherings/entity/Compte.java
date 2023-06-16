@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * Classe représentant un compte utilisateur dans le jeu "Seigneur des Anneaux".
+ */
 @Entity
 public class Compte {
 
@@ -24,6 +26,15 @@ public class Compte {
 
     public Compte() {
     }
+
+    /**
+     * Constructeur de la classe Compte.
+     *
+     * @param nom_utilisateur le nom de l'utilisateur
+     * @param motDePasse      le mot de passe de l'utilisateur
+     * @param date_creation   la date de création du compte
+     * @param premium         indique si le compte est un compte premium ou non
+     */
 
     public Compte( String nom_utilisateur, String motDePasse, String date_creation, boolean premium) {
 
