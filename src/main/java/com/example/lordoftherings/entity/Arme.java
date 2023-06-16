@@ -20,7 +20,7 @@ public class Arme {
     private String type_stat;//str, agi, int
 
     @JsonIgnore
-    @OneToMany(mappedBy = "arme")
+    @OneToMany(mappedBy = "arme",fetch = FetchType.EAGER)
     private List<Personnage> personnages = new ArrayList<>();
 
     public Arme() {

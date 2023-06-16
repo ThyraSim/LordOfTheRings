@@ -19,7 +19,7 @@ public class Compte {
     private String date_creation;
     private boolean premium;
 
-    @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Personnage> personnages = new ArrayList<>();
 
     public Compte() {

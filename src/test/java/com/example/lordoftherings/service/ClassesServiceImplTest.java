@@ -5,6 +5,7 @@ import com.example.lordoftherings.entity.Classes;
 import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.repository.ArmeRepository;
 import com.example.lordoftherings.repository.ClassesRepository;
+import com.example.lordoftherings.repository.PersonnageRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +22,13 @@ class ClassesServiceImplTest {
     private ClassesService classesService;
 
     @Autowired
+    private ClassesRepository classesRepository;
+
+    @Autowired
     private PersonnageService personnageService;
+
+    @Autowired
+    private PersonnageRepository personnageRepository;
 
     @Test
     void testFindAll() {
@@ -170,5 +177,46 @@ class ClassesServiceImplTest {
 
     @Test
     void testIsClasseInUse() {
+        // Création des données pour le test
+        Personnage personnageWithClasses = new Personnage();
+        Classes classesUsedByPersonnage = new Classes();
+
+    // Sauvegarde de classes
+        classesService.save(classesUsedByPersonnage);
+
+    // Récupération de l'ID de classes utilisée
+        List<Classes> listAllClasses = classesService.findAll();
+        int classesUsedByPersonageID = listAllClasses.get(listAllClasses.size() - 1).getId_classe();
+
+    // Attribution des classes au personnage
+        personnageWithClasses.setClasse(classesUsedByPersonnage);
+
+        personnageService.save(personnageWithClasses);
+
+    // Test
+        assertEquals(true, classesService.isClasseInUse(classesUsedByPersonageID));
+
+    // Nettoyage
+        personnageRepository.delete(personnageWithClasses);
+        classesRepository.delete(classesUsedByPersonnage);
+
+    }
+
+    @Test
+    void testIsClasseInUseFalse() {
+
+        // Création des données pour le test
+        Classes classeNotUsed = new Classes();
+        classesService.save(classeNotUsed);
+
+        // Récupération de l'ID de la classe non utilisée
+        List<Classes> listAllClasses = classesService.findAll();
+        int classeNotUsedID = listAllClasses.get(listAllClasses.size() - 1).getId_classe();
+
+        // Test
+        assertEquals(false, classesService.isClasseInUse(classeNotUsedID));
+
+        // Nettoyage
+        classesRepository.delete(classeNotUsed);
     }
 }

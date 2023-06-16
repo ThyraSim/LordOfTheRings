@@ -20,7 +20,7 @@ public class Classes {
     private String image;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "classe")
+    @OneToMany(mappedBy = "classe",fetch = FetchType.EAGER)
     private List<Personnage> personnages = new ArrayList<>();
 
     public Classes(){

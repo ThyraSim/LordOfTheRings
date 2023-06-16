@@ -3,8 +3,10 @@ package com.example.lordoftherings.service;
 import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.repository.ArmeRepository;
+import com.example.lordoftherings.repository.PersonnageRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -19,9 +21,14 @@ class ArmeServiceImplTest {
 
     @Autowired
     private ArmeService armeService;
+    @Autowired
+    private ArmeRepository armeRepository;
 
     @Autowired
     private PersonnageService personnageService;
+
+    @Autowired
+    private PersonnageRepository personnageRepository;
 
 
     @Test
@@ -179,11 +186,119 @@ class ArmeServiceImplTest {
     }
 
     @Test
-    void testIsArmeInUse() {
+    void testIsArmeInUseTrue() {
+
+        //Création donnée pour le test
+        Personnage personnageWithArme = new Personnage();
+        Arme armeUsedByPersonnage = new Arme();
+
+
+        armeService.save(armeUsedByPersonnage);
+
+        // retrouve id de l'arme utilisé
+        List<Arme> listAllArme = armeService.findAll();
+        int armeUsedByPersonageID = listAllArme.get(listAllArme.size() - 1).getId_arme();
+
+        //assignation de l'arme au personnage
+        personnageWithArme.setArme(armeUsedByPersonnage);
+
+        personnageService.save(personnageWithArme);
+
+
+        //test
+        assertEquals (true,
+                armeService.isArmeInUse(armeUsedByPersonageID));
+
+
+        //nettoyage
+        personnageRepository.delete(personnageWithArme);
+        armeRepository.delete(armeUsedByPersonnage);
+
     }
 
     @Test
-    void testFindArmeByDommageBetween() {
+    void testIsArmeInUseFalse() {
+
+        //Création donnée pour le test
+        Arme armeNotUsed = new Arme();
+        armeService.save(armeNotUsed);
+
+        // retrouve id de l'arme utilisé
+        List<Arme> listAllArme = armeService.findAll();
+        int armeUsedByPersonageID = listAllArme.get(listAllArme.size() - 1).getId_arme();
+
+        //test
+        assertEquals (false,
+                armeService.isArmeInUse(armeUsedByPersonageID));
+
+        //nettoyage
+               armeRepository.delete(armeNotUsed);
+    }
+
+    @Test
+    void testFindArmeByDommageBetween10And20() {
+// Création pour le test
+        Arme armeDmg9 = new Arme();
+        armeDmg9.setDommage(9);
+        Arme armeDmg10 = new Arme();
+        armeDmg10.setDommage(10);
+        Arme armeDmg11 = new Arme();
+        armeDmg11.setDommage(11);
+        Arme armeDmg19 = new Arme();
+        armeDmg19.setDommage(19);
+        Arme armeDmg20 = new Arme();
+        armeDmg20.setDommage(20);
+        Arme armeDmg21 = new Arme();
+        armeDmg21.setDommage(21);
+
+        armeService.save(armeDmg9);
+        armeService.save(armeDmg10);
+        armeService.save(armeDmg11);
+        armeService.save(armeDmg19);
+        armeService.save(armeDmg20);
+        armeService.save(armeDmg21);
+
+        Boolean armeDmg9Trouve = false;
+        Boolean armeDmg10Trouve = false;
+        Boolean armeDmg11Trouve = false;
+        Boolean armeDmg19Trouve = false;
+        Boolean armeDmg20Trouve = false;
+        Boolean armeDmg21Trouve = false;
+
+        List<Arme> listeArmeBetween10And20 = armeService.findArmeByDommageBetween(10, 20);
+
+        for (Arme arme : listeArmeBetween10And20) {
+            if (arme.equals(armeDmg9)) {
+                armeDmg9Trouve = true;
+            } else if (arme.equals(armeDmg10)) {
+                armeDmg10Trouve = true;
+            } else if (arme.equals(armeDmg11)) {
+                armeDmg11Trouve = true;
+            } else if (arme.equals(armeDmg19)) {
+                armeDmg19Trouve = true;
+            } else if (arme.equals(armeDmg20)) {
+                armeDmg20Trouve = true;
+            } else if (arme.equals(armeDmg21)) {
+                armeDmg21Trouve = true;
+            }
+        }
+
+        assertEquals(false,armeDmg9Trouve);
+        assertEquals(true,armeDmg10Trouve);
+        assertEquals(true,armeDmg11Trouve);
+        assertEquals(true,armeDmg19Trouve);
+        assertEquals(true,armeDmg20Trouve);
+        assertEquals(false,armeDmg21Trouve);
+
+        //Nettoyage
+
+        armeRepository.delete(armeDmg9);
+        armeRepository.delete(armeDmg10);
+        armeRepository.delete(armeDmg11);
+        armeRepository.delete(armeDmg19);
+        armeRepository.delete(armeDmg20);
+        armeRepository.delete(armeDmg21);
+
     }
 
     @Test
