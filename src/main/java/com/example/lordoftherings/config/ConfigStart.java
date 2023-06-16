@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * on va créer nos scripts à  l'aide de CommandLineRunner
+ * Classe de configuration pour l'initialisation de la base de données avec des données d'exemple.
  */
 
 @Component
@@ -40,10 +40,7 @@ public class ConfigStart implements CommandLineRunner {
 
         if (compteService.findAll().isEmpty()) {
             initialisationBDD(armeService, classesService, compteService, personnageService);
-
         }
-
-
     }
 
     private void initialisationBDD(ArmeService armeService, ClassesService classesService, CompteService compteService, PersonnageService personnageService) {
@@ -93,8 +90,6 @@ public class ConfigStart implements CommandLineRunner {
         initCompteList.add(new Compte("Knik", "Knok", "1991-09-20", true));
 
 
-
-
         for (Compte c :
                 initCompteList) {
             compteService.save(c);
@@ -102,11 +97,9 @@ public class ConfigStart implements CommandLineRunner {
         }
 
 
-
         //on creer les personnages
 
         List<Personnage> initPersonnageList = new ArrayList<>();
-
 
 
         initPersonnageList.add(new Personnage("ChatHeroique", "2023-05-23", 1, compteService.findById(1), armeService.findById(1), classesService.findById(1)));
@@ -140,7 +133,7 @@ public class ConfigStart implements CommandLineRunner {
         initPersonnageList.add(new Personnage("God", "0000-00-00", 9999, compteService.findById(5), armeService.findById(9), classesService.findById(2)));
 
         for (Personnage p :
-             initPersonnageList) {
+                initPersonnageList) {
             personnageService.save(p);
             System.out.println("Sauvegarde personnage " + p);
         }

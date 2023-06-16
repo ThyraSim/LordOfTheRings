@@ -64,5 +64,14 @@ import java.util.List;
             return armeService.save(oldArme);
         }
 
+        @GetMapping("/JSON/recherche/armes/typeStat/{typeStat}")
+        public List<Arme> RechercheByTypeStat(String typeStat){
+
+            return armeService.rechercheArmeTypeStat(typeStat);
+
+        }
+
+
+
     }
 

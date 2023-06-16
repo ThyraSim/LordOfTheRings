@@ -66,5 +66,15 @@ import java.util.List;
 
             return ResponseEntity.ok("Item modified successfully");
         }
+
+        @GetMapping("/JSON/Recherche/comptesPrenium")
+        public List<Compte> recherComptePrenium(){
+            return compteService.rechercheComptePrenium();
+
+        }
+        @GetMapping("/JSON/Recherche/compte/nomUtilisateur/{saisi}")
+        public List<Compte> rechercheNomUtilisateurContenant(@PathVariable String saisi){
+            return compteService.rechercheNomUtilisateurContenant(saisi);
+        }
     }
 

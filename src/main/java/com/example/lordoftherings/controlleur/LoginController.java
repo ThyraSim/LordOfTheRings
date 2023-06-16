@@ -35,6 +35,14 @@ public class LoginController {
         this.compteService = compteService;
     }
 
+    /**
+     * Traite la requête POST pour le processus de connexion.
+     *
+     * @param username   Le nom d'utilisateur saisi dans le formulaire de connexion.
+     * @param password   Le mot de passe saisi dans le formulaire de connexion.
+     * @param sessionId  La valeur du cookie "sessionId".
+     * @return La réponse HTTP avec une redirection vers l'URL appropriée en fonction de la réussite ou de l'échec de la connexion.
+     */
     @PostMapping("/logins")
     public ResponseEntity<String> processLogin(@RequestParam("username") String username, @RequestParam("password") String password, @CookieValue(name = "sessionId", required = false) Integer sessionId) {
         List<Compte> allComptes = compteService.findAll();
@@ -80,12 +88,22 @@ public class LoginController {
         }
     }
 
+    /**
+     * Traite la requête GET de redirection en cas d'échec de la connexion.
+     *
+     * @return La vue "badMDP" pour afficher un message d'erreur de mot de passe.
+     */
     @GetMapping("/redirectBad")
     public String redirectBad(){
         return "badMDP";
     }
 
-
+    /**
+     * Traite la requête GET de redirection en cas de connexion déjà établie.
+     *
+     * @param sessionId  La valeur du cookie "sessionId".
+     * @return La redirection appropriée en fonction de l'état de la connexion.
+     */
     @GetMapping("/alrCon")
     public String alreadyConnected (@CookieValue(name = "sessionId", required = false) Integer sessionId) {
         List<Compte> allComptes = compteService.findAll();
@@ -102,6 +120,11 @@ public class LoginController {
         return "error";
     }
 
+    /**
+     * Traite la requête POST pour la déconnexion.
+     *
+     * @return La réponse HTTP avec une redirection vers la page de connexion et le cookie "sessionId" supprimé.
+     */
     @PostMapping("/logout")
     public ResponseEntity<String> logout(){
         ResponseCookie deletedCookie = ResponseCookie.from("sessionId", "")
@@ -111,11 +134,11 @@ public class LoginController {
                 .path("/")
                 .build();
 
-        // Set the deleted cookie in the response headers
+        // Définit le cookie supprimé dans les en-têtes de la réponse
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.SET_COOKIE, deletedCookie.toString());
 
-        // Return the response with the deleted cookie
+        // Retourne la réponse avec le cookie supprimé
         return ResponseEntity.status(HttpStatus.SEE_OTHER)
                 .header(HttpHeaders.LOCATION, "/")
                 .headers(headers)
