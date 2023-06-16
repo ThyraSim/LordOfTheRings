@@ -5,6 +5,7 @@ package com.example.lordoftherings.controleurJSON;
 import com.example.lordoftherings.entity.Compte;
 import com.example.lordoftherings.entity.Personnage;
 import com.example.lordoftherings.entity.Personnage;
+import com.example.lordoftherings.service.CompteService;
 import com.example.lordoftherings.service.PersonnageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,12 @@ import java.util.List;
     @RestController
     public class JSONPersonnageControlleur {
         private PersonnageService personnageService;
+        private CompteService compteService;
 
         @Autowired
-        public JSONPersonnageControlleur(PersonnageService personnageService){
+        public JSONPersonnageControlleur(PersonnageService personnageService, CompteService compteService){
             this.personnageService = personnageService;
+            this.compteService = compteService;
         }
 
         @GetMapping("/JSON/personnages")
@@ -40,8 +43,10 @@ import java.util.List;
             return  "personnage supprimé : " + personnageId;
         }
 
-        @PostMapping("/JSON/personnages")
-        public Personnage addpersonnage(@RequestBody Personnage personnage){
+        @PostMapping("/JSON/comptes/{compteId}/personnages")
+        public Personnage addpersonnage(@PathVariable int compteId,
+                                        @RequestBody Personnage personnage){
+            personnage.setCompte(compteService.findById(compteId));
             return this.personnageService.save(personnage);
         }
 
