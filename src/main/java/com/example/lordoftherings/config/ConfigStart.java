@@ -110,7 +110,7 @@ public class ConfigStart implements CommandLineRunner {
         initPersonnageList.add(new Personnage("Cheese", "2023-05-29", 70, compteService.findById(1), armeService.findById(8), classesService.findById(3)));
         initPersonnageList.add(new Personnage("Bruh", "2023-05-23", 49, compteService.findById(1), armeService.findById(2), classesService.findById(1)));
         initPersonnageList.add(new Personnage("Meh", "2023-05-23", 10, compteService.findById(1), armeService.findById(1), classesService.findById(2)));
-        initPersonnageList.add(new Personnage("Dafuq", "2023-05-23", 50, compteService.findById(1), armeService.findById(3), classesService.findById(1)));
+        initPersonnageList.add(new Personnage("Miaw", "2023-05-23", 50, compteService.findById(1), armeService.findById(3), classesService.findById(1)));
 
 
         initPersonnageList.add(new Personnage("Pikachu", "2023-06-01", 20, compteService.findById(2), armeService.findById(4), classesService.findById(1)));
