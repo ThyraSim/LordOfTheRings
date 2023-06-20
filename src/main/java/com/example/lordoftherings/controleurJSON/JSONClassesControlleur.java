@@ -1,10 +1,9 @@
 package com.example.lordoftherings.controleurJSON;
 
-import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.entity.Classes;
 import  com.example.lordoftherings.service.ClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,9 +35,18 @@ public class JSONClassesControlleur {
      */
     @DeleteMapping("/JSON/classes/{classeId}")
     public String deleteClasse(@PathVariable Integer classeId) {
-        Classes tempClasse = classesService.findById(classeId);
-        classesService.delete(classeId);
-        return "Classe supprimée : " + classeId;
+        try {
+            Classes tempClasse = classesService.findById(classeId);
+
+            try {
+                classesService.delete(classeId);
+                return "Classe supprimée : " + classeId;
+            } catch (DataIntegrityViolationException e) {
+                return "Impossible de supprimer cette classe puisqu'elle est utilisée par au moins 1 personnage";
+            }
+        } catch (RuntimeException e){
+            return e.getMessage();
+        }
     }
 
     /**

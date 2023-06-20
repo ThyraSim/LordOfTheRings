@@ -3,9 +3,11 @@ package com.example.lordoftherings.controleurJSON;
 import com.example.lordoftherings.entity.Arme;
 import com.example.lordoftherings.service.ArmeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -72,9 +74,18 @@ public class JSONArmeControlleur {
      */
     @DeleteMapping("/JSON/armes/{armeId}")
     public String deleteArme(@PathVariable Integer armeId) {
-        Arme tempArme = armeService.findById(armeId);
-        armeService.delete(armeId);
-        return "Arme supprimée : " + armeId;
+        try {
+            Arme tempArme = armeService.findById(armeId);
+
+            try {
+                armeService.delete(armeId);
+                return "Arme supprimée : " + armeId;
+            } catch (DataIntegrityViolationException e) {
+                return "Impossible de supprimer cette arme puisqu'elle est utilisée par au moins 1 personnage";
+            }
+        } catch (RuntimeException e){
+            return e.getMessage();
+        }
     }
 
     /**

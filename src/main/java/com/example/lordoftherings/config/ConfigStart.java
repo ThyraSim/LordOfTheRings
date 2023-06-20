@@ -72,6 +72,7 @@ public class ConfigStart implements CommandLineRunner {
         initClassesList.add(new Classes("Magichat", 1, 3, 2, 5, "Magichat.jpg"));
         initClassesList.add(new Classes("Wizard", 2, 5, 3, 2, "wizard.jpg"));
         initClassesList.add(new Classes("Rogue", 3, 3, 3, 3, "Rogue.jpg"));
+        initClassesList.add(new Classes("Necromancien", 2, 4, 4, 5, "Necromancien.jpg"));
 
         for (Classes c :
                 initClassesList) {
