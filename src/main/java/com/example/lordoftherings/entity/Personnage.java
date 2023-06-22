@@ -127,6 +127,11 @@ public class Personnage {
         this.classe = classe;
     }
 
+    /**
+     * Ces fonctions permet de comparer les personnages par tous leurs attributs
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

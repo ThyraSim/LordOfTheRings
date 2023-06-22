@@ -105,6 +105,11 @@ public class Compte {
                 '}';
     }
 
+    /**
+     * Ces fonctions permet de comparer les comptes par tous leurs attributs
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

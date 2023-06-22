@@ -127,7 +127,7 @@ public class Classes {
     }
 
     /**
-     * Ces fonctions permet de comparer les armes par tous leurs attributs
+     * Ces fonctions permet de comparer les classes par tous leurs attributs
      * @param o
      * @return
      */
