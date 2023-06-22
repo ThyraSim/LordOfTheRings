@@ -114,6 +114,11 @@ public class Arme {
                 '}';
     }
 
+    /**
+     * Ces fonctions permet de comparer les armes par tous leurs attributs
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
